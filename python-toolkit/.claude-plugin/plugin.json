@@ -1,0 +1,8 @@
+{
+  "name": "python-toolkit",
+  "version": "0.1.0",
+  "description": "Python 開發：資深 Python 專家 agent、venv 虛擬環境規範，附 /run-python 指令。",
+  "author": { "name": "<你的名字>" },
+  "license": "MIT",
+  "keywords": ["python", "venv", "agent"]
+}

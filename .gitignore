@@ -1,0 +1,13 @@
+# OS / 編輯器
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# 機密（保險起見，這個 repo 本就不該有）
+.env
+.env.*
+*.pem
+*.key
+.credentials.json

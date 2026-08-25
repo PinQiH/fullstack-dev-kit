@@ -1,0 +1,8 @@
+{
+  "name": "frontend-vue",
+  "version": "0.1.0",
+  "description": "Vue 3 / Nuxt 3 前端規範：架構、API/Service 層、TypeScript、UX 啟發式與前端測試，附 /test-fe、/component-doc 指令。部分 skill fork 自 MIT 專案，見各 skill 的 ATTRIBUTION.md。",
+  "author": { "name": "<你的名字>" },
+  "license": "MIT",
+  "keywords": ["vue", "nuxt", "frontend", "typescript", "ux", "testing"]
+}

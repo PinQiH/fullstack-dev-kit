@@ -1,0 +1,8 @@
+{
+  "name": "workflow-core",
+  "version": "0.1.0",
+  "description": "全端工作流基座：code review / debug / git / 決策 / 規劃 / 架構 skill 與指令，附團隊技術標準注入（SessionStart）與安全防護 hook。",
+  "author": { "name": "<你的名字>" },
+  "license": "MIT",
+  "keywords": ["workflow", "code-review", "git", "debug", "standards", "hooks"]
+}

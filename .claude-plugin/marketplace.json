@@ -1,0 +1,38 @@
+{
+  "name": "fullstack-dev-kit",
+  "owner": {
+    "name": "<你的名字>",
+    "url": "https://github.com/<你的-github>"
+  },
+  "description": "全端開發規範與工作流 kit：核心工作流 + Node 後端 + Vue/Nuxt 前端 + Python，模組化安裝，各取所需。",
+  "plugins": [
+    {
+      "name": "workflow-core",
+      "source": "./workflow-core",
+      "version": "0.1.0",
+      "license": "MIT",
+      "description": "所有人的基座：code review / debug / git / 決策 / 規劃 / 架構 skill 與指令，附團隊技術標準注入與安全防護 hook。"
+    },
+    {
+      "name": "backend-node",
+      "source": "./backend-node",
+      "version": "0.1.0",
+      "license": "MIT",
+      "description": "Node.js 後端：分層規範、DB 命名、後端測試，加上 /api-doc、/cronjob-doc、/test 指令。"
+    },
+    {
+      "name": "frontend-vue",
+      "source": "./frontend-vue",
+      "version": "0.1.0",
+      "license": "MIT",
+      "description": "Vue 3 / Nuxt 3：架構規範、UX 啟發式、前端測試，加上 /test-fe、/component-doc 指令。"
+    },
+    {
+      "name": "python-toolkit",
+      "source": "./python-toolkit",
+      "version": "0.1.0",
+      "license": "MIT",
+      "description": "Python：專家 agent、venv 環境規範，加上 /run-python 指令。"
+    }
+  ]
+}
