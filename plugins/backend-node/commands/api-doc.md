@@ -1,6 +1,8 @@
 ---
-description: 撰寫API文件
+description: 撰寫 API 文件
 ---
+
+# /api-doc — API 文件撰寫
 
 撰寫 API 文件 SOP / Checklist
 (不需要產出實體檔案，可以僅在Agent回應，或產生臨時檔案)

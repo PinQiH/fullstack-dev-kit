@@ -1,8 +1,0 @@
-{
-  "name": "backend-node",
-  "version": "0.1.0",
-  "description": "Node.js 後端開發規範：分層職責、命名、非同步、Repository/Controller、DB 命名與後端測試，附 /api-doc、/cronjob-doc、/test 指令。",
-  "author": { "name": "<你的名字>" },
-  "license": "MIT",
-  "keywords": ["nodejs", "backend", "database", "testing", "api"]
-}

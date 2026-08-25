@@ -2,7 +2,7 @@
 description: 前端測試撰寫（Vue/Nuxt）
 ---
 
-# /test-fe — 前端測試撰寫
+# /test-frontend — 前端測試撰寫
 
 載入 `frontend-testing-guidelines` skill，依規範為指定的 Vue 元件 / composable / 頁面產生高品質測試。
 
@@ -35,9 +35,9 @@ description: 前端測試撰寫（Vue/Nuxt）
 ## 使用範例
 
 ```
-/test-fe src/components/admin/IngestionJobList.vue
+/test-frontend src/components/admin/IngestionJobList.vue
 ```
 
 ```
-/test-fe 為 useAsyncState composable 補齊失敗與 loading 情境
+/test-frontend 為 useAsyncState composable 補齊失敗與 loading 情境
 ```

@@ -1,8 +1,8 @@
 ---
-description: 產出 commit 訊息
+description: 依團隊規範產生 Git commit 訊息
 ---
 
-# Git Commit 訊息生成 SOP
+# /git-commit — Git Commit 訊息產生
 
 當你準備要寫 commit 前，請遵循以下步驟：
 

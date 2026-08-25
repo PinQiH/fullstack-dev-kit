@@ -1,6 +1,8 @@
 ---
-description: 執行Python程式
+description: 執行 Python 程式與管理虛擬環境
 ---
+
+# /run-python — Python 程式執行
 
 Python 程式執行 Workflow SOP（含虛擬環境）
 

@@ -2,7 +2,7 @@
 description: 對程式進行 Code Review，呼叫 code-reviewer agent 進行獨立審查
 ---
 
-# 執行 Code Review 流程
+# /code-review — 程式碼審查
 
 此指令會呼叫 `code-reviewer` agent，在獨立的上下文中對你的程式碼進行完整審查。
 

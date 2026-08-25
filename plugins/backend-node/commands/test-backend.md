@@ -1,4 +1,8 @@
-# /test — 後端測試撰寫
+---
+description: 後端測試撰寫（Node.js）
+---
+
+# /test-backend — 後端測試撰寫
 
 載入 `backend-testing-guidelines` skill，依規範為指定模組產生高品質測試。
 
@@ -37,9 +41,9 @@ it("03. POST /orders - 使用者未登入，回傳 401")
 ## 使用範例
 
 ```
-/test src/services/orderService.js
+/test-backend src/services/orderService.js
 ```
 
 ```
-/test 為 courseController 的 POST /courses 補齊測試，目前只有成功情境
+/test-backend 為 courseController 的 POST /courses 補齊測試，目前只有成功情境
 ```

@@ -1,3 +1,7 @@
+---
+description: 系統化除錯與根本原因分析
+---
+
 # /debug — 系統化除錯
 
 載入 `debugger` skill，以結構化流程分析並排除程式碼問題。

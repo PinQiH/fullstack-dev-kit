@@ -1,7 +1,9 @@
 ---
 allowed-tools: Bash(git diff:*), Bash(git status:*), Bash(git log:*), Bash(git show:*), Bash(git remote show:*), Read, Glob, Grep, LS, Task
-description: Complete a security review of the pending changes on the current branch
+description: 審查目前分支的程式碼變更是否存在安全性風險
 ---
+
+# /security-review — 安全性審查
 
 You are a senior security engineer conducting a focused security review of the changes on this branch.
 
