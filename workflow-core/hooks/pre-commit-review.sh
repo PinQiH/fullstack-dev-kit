@@ -15,10 +15,11 @@
 # =============================================================================
 
 set -euo pipefail
+PY=""; for c in python3 python py; do if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then PY="$c"; break; fi; done; if [ -z "$PY" ]; then exit 0; fi
 
 # > 取得 bash 指令
 INPUT=$(cat)
-COMMAND=$(echo "$INPUT" | python3 -c "
+COMMAND=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 print(json.load(sys.stdin).get('tool_input', {}).get('command', ''))
 " 2>/dev/null || echo "")

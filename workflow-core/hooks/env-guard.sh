@@ -12,10 +12,11 @@
 # =============================================================================
 
 set -euo pipefail
+PY=""; for c in python3 python py; do if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then PY="$c"; break; fi; done; if [ -z "$PY" ]; then exit 0; fi
 
 # > 讀取 stdin，取得工具名稱與輸入
 INPUT=$(cat)
-TOOL_NAME=$(echo "$INPUT" | python3 -c "
+TOOL_NAME=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 print(json.load(sys.stdin).get('tool_name', ''))
 " 2>/dev/null || echo "")
@@ -24,7 +25,7 @@ print(json.load(sys.stdin).get('tool_name', ''))
 # @ 情境零：Claude 使用 Glob 工具掃描機密檔案路徑
 # =============================================================================
 if [ "$TOOL_NAME" = "Glob" ]; then
-  PATTERN=$(echo "$INPUT" | python3 -c "
+  PATTERN=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 data = json.load(sys.stdin)
 print(data.get('tool_input', {}).get('pattern', ''))
@@ -68,7 +69,7 @@ fi
 # @ 情境一：Claude 使用 Read 工具直接讀取檔案
 # =============================================================================
 if [ "$TOOL_NAME" = "Read" ]; then
-  FILE_PATH=$(echo "$INPUT" | python3 -c "
+  FILE_PATH=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 data = json.load(sys.stdin)
 print(data.get('tool_input', {}).get('file_path', ''))
@@ -120,7 +121,7 @@ fi
 # @ 情境二：Claude 使用 Bash 工具透過指令讀取機密檔案
 # =============================================================================
 if [ "$TOOL_NAME" = "Bash" ]; then
-  COMMAND=$(echo "$INPUT" | python3 -c "
+  COMMAND=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 print(json.load(sys.stdin).get('tool_input', {}).get('command', ''))
 " 2>/dev/null || echo "")

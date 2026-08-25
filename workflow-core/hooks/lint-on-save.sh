@@ -12,10 +12,11 @@
 # =============================================================================
 
 set -euo pipefail
+PY=""; for c in python3 python py; do if command -v "$c" >/dev/null 2>&1 && "$c" -c "import sys" >/dev/null 2>&1; then PY="$c"; break; fi; done; if [ -z "$PY" ]; then exit 0; fi
 
 # > 讀取 stdin（Claude Code 傳入的 JSON 工具結果）
 INPUT=$(cat)
-FILE_PATH=$(echo "$INPUT" | python3 -c "
+FILE_PATH=$(echo "$INPUT" | "$PY" -c "
 import json, sys
 data = json.load(sys.stdin)
 inp = data.get('tool_input', {})
