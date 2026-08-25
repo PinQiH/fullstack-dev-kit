@@ -1,0 +1,24 @@
+{
+	"name": "backend-node",
+	"version": "0.1.1",
+	"description": "Node.js 後端的分層、資料庫與測試規範。",
+	"author": {
+		"name": "PinChi Huang",
+		"url": "https://github.com/PinQiH"
+	},
+	"license": "MIT",
+	"keywords": ["nodejs", "backend", "database", "testing", "api"],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Backend Node",
+		"shortDescription": "Node.js 後端工程規範。",
+		"longDescription": "提供 Node.js 分層架構、資料庫命名與後端測試技能。",
+		"developerName": "PinChi Huang",
+		"category": "Developer Tools",
+		"capabilities": ["Skills"],
+		"defaultPrompt": [
+			"依 Node.js 後端規範協助我實作這個功能。",
+			"為這個 Node.js 模組補齊測試。"
+		]
+	}
+}

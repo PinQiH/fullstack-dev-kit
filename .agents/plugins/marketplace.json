@@ -1,0 +1,56 @@
+{
+	"name": "fullstack-dev-kit",
+	"interface": {
+		"displayName": "Fullstack Dev Kit"
+	},
+	"plugins": [
+		{
+			"name": "workflow-core",
+			"source": {
+				"source": "local",
+				"path": "./plugins/workflow-core"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Developer Tools"
+		},
+		{
+			"name": "backend-node",
+			"source": {
+				"source": "local",
+				"path": "./plugins/backend-node"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Developer Tools"
+		},
+		{
+			"name": "frontend-vue",
+			"source": {
+				"source": "local",
+				"path": "./plugins/frontend-vue"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Developer Tools"
+		},
+		{
+			"name": "python-toolkit",
+			"source": {
+				"source": "local",
+				"path": "./plugins/python-toolkit"
+			},
+			"policy": {
+				"installation": "AVAILABLE",
+				"authentication": "ON_INSTALL"
+			},
+			"category": "Developer Tools"
+		}
+	]
+}

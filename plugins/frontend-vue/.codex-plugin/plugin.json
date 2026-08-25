@@ -1,0 +1,24 @@
+{
+	"name": "frontend-vue",
+	"version": "0.1.1",
+	"description": "Vue 3 與 Nuxt 3 的架構、UX 與測試規範。",
+	"author": {
+		"name": "PinChi Huang",
+		"url": "https://github.com/PinQiH"
+	},
+	"license": "MIT",
+	"keywords": ["vue", "nuxt", "frontend", "typescript", "ux", "testing"],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Frontend Vue",
+		"shortDescription": "Vue 與 Nuxt 前端工程規範。",
+		"longDescription": "提供 Vue/Nuxt 架構、UX 啟發式與前端測試技能。",
+		"developerName": "PinChi Huang",
+		"category": "Developer Tools",
+		"capabilities": ["Skills"],
+		"defaultPrompt": [
+			"依 Vue 3 與 Nuxt 3 規範協助我實作這個介面。",
+			"檢查這個前端元件的 UX 與測試需求。"
+		]
+	}
+}

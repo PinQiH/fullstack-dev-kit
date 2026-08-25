@@ -1,0 +1,24 @@
+{
+	"name": "workflow-core",
+	"version": "0.1.1",
+	"description": "全端開發的共用工作流、程式碼審查、除錯、Git 與架構規範。",
+	"author": {
+		"name": "PinChi Huang",
+		"url": "https://github.com/PinQiH"
+	},
+	"license": "MIT",
+	"keywords": ["workflow", "code-review", "debug", "git", "architecture"],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Workflow Core",
+		"shortDescription": "全端共用工作流與工程規範。",
+		"longDescription": "提供團隊技術標準、程式碼審查、除錯、Git、決策、規劃與架構技能。",
+		"developerName": "PinChi Huang",
+		"category": "Developer Tools",
+		"capabilities": ["Skills"],
+		"defaultPrompt": [
+			"依團隊規範協助我處理這個開發任務。",
+			"審查目前工作區的程式碼變更。"
+		]
+	}
+}

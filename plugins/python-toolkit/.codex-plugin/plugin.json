@@ -1,0 +1,24 @@
+{
+	"name": "python-toolkit",
+	"version": "0.1.1",
+	"description": "Python 開發、型別安全與虛擬環境規範。",
+	"author": {
+		"name": "PinChi Huang",
+		"url": "https://github.com/PinQiH"
+	},
+	"license": "MIT",
+	"keywords": ["python", "venv", "typing", "testing"],
+	"skills": "./skills/",
+	"interface": {
+		"displayName": "Python Toolkit",
+		"shortDescription": "Python 工程與環境規範。",
+		"longDescription": "提供 Python 專家與虛擬環境管理技能。",
+		"developerName": "PinChi Huang",
+		"category": "Developer Tools",
+		"capabilities": ["Skills"],
+		"defaultPrompt": [
+			"依 Python 最佳實務協助我處理這個模組。",
+			"檢查這段 Python 程式碼的型別安全與錯誤處理。"
+		]
+	}
+}
