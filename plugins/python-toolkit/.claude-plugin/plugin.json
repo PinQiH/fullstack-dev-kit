@@ -1,7 +1,7 @@
 {
   "name": "python-toolkit",
-  "version": "0.1.1",
-  "description": "Python 開發：資深 Python 專家 agent、venv 虛擬環境規範，附 /run-python 指令。",
+  "version": "0.2.0",
+  "description": "Python 開發、Code Review、venv 虛擬環境規範與跨平台 run-python skill，另附 Claude Code 專家 agent。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",
   "keywords": ["python", "venv", "agent"]

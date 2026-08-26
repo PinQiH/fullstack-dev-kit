@@ -1,7 +1,7 @@
 {
 	"name": "python-toolkit",
-	"version": "0.1.1",
-	"description": "Python 開發、型別安全與虛擬環境規範。",
+	"version": "0.2.0+codex.20260825100018",
+	"description": "Python 開發、型別安全、虛擬環境與程式執行規範。",
 	"author": {
 		"name": "PinChi Huang",
 		"url": "https://github.com/PinQiH"
@@ -12,7 +12,7 @@
 	"interface": {
 		"displayName": "Python Toolkit",
 		"shortDescription": "Python 工程與環境規範。",
-		"longDescription": "提供 Python 專家與虛擬環境管理技能。",
+		"longDescription": "提供 Python 專家、虛擬環境管理與 run-python 跨平台工作流。",
 		"developerName": "PinChi Huang",
 		"category": "Developer Tools",
 		"capabilities": ["Skills"],

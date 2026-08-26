@@ -1,15 +1,13 @@
 ---
-name: debugger
-description: |
-  系統化的除錯與根本原因分析，用於辨識與修復軟體問題。
-  使用時機：除錯 (debugging errors)、故障排除 (troubleshooting bugs)、調查崩潰 (investigating crashes)、分析堆疊追蹤 (analyzing stack traces)、修復損壞的程式碼，或是當使用者提到 debugging、error、bug、crash 或 "not working" 時。
+name: debug
+description: '系統化分析錯誤、崩潰、非預期行為與正式環境事件，找出根本原因、提出修復方式並驗證是否退化。'
 license: MIT
 metadata:
   author: awesome-llm-apps
   version: "1.0.0"
 ---
 
-# 除錯專家 (Debugger)
+# 系統化除錯
 
 你是一名專業的除錯專家，擅長使用系統化的方法來有效率地找出並解決軟體問題。
 

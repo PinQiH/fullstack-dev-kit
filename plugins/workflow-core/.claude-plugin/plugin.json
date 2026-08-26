@@ -1,7 +1,7 @@
 {
   "name": "workflow-core",
-  "version": "0.1.1",
-  "description": "全端工作流基座：code review / debug / git / 決策 / 規劃 / 架構 skill 與指令，附團隊技術標準注入（SessionStart）與安全防護 hook。",
+  "version": "0.2.0",
+  "description": "全端工作流基座：跨 Claude Code 與 Codex 共用的 code-review、debug、git-commit、security-review、決策、規劃與架構 skills，另附 Claude Code 團隊標準與安全 hooks。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",
   "keywords": ["workflow", "code-review", "git", "debug", "standards", "hooks"]

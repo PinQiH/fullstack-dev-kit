@@ -1,17 +1,13 @@
 ---
-name: frontend-testing-guidelines
-description: >
-  測試骨架自動生成技能。
-  為 Vue 3 / Nuxt 3 / TypeScript 專案自動生成
-  Vitest 單元測試與 Playwright E2E 測試骨架，
-  並強制套用命名規範、Mock 策略與測試優先原則。
+name: test-frontend
+description: '為 Vue 3、Nuxt 3 或 TypeScript 的 Service、Composable、元件與使用者流程撰寫、補齊或審查 Vitest 與 Playwright 測試。'
 ---
 
-# Testing Toolkit Skill
+# 前端測試撰寫與規範
 
 **Tech Stack**：Vitest 2.x, Playwright 1.x, Vue Test Utils, TypeScript
-**對應技術規範**：`frontend_architect` Skill CASE A/B/C（測試對象的規範）
-**強制時機**：使用者說「產生測試」「幫我寫測試」「generate test」「新增 spec」時觸發
+**對應技術規範**：`vue-nuxt-guidelines` skill（測試對象的規範）
+**觸發時機**：使用者說「產生測試」「幫我寫測試」「generate test」「新增 spec」時使用
 
 ---
 

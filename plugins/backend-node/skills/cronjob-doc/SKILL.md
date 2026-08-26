@@ -1,8 +1,9 @@
 ---
-description: 撰寫排程文件
+name: cronjob-doc
+description: '為新增或修改的排程撰寫可交接文件，涵蓋目的、執行時間、程式流程、log、資料影響、資料流與維運風險。'
 ---
 
-# /cronjob-doc — 排程文件撰寫
+# 排程文件撰寫
 
 撰寫排程文件 SOP / Checklist
 

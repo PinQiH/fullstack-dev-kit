@@ -1,7 +1,7 @@
 {
   "name": "backend-node",
-  "version": "0.1.1",
-  "description": "Node.js 後端開發規範：分層職責、命名、非同步、Repository/Controller、DB 命名與後端測試，附 /api-doc、/cronjob-doc、/test-backend 指令。",
+  "version": "0.2.0",
+  "description": "Node.js 後端開發規範與跨平台 api-doc、cronjob-doc、test-backend skills，涵蓋分層、命名、非同步、資料庫與測試。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",
   "keywords": ["nodejs", "backend", "database", "testing", "api"]

@@ -1,12 +1,13 @@
 ---
-name: backend-testing-guidelines
-description: >
-  後端測試全面規範。涵蓋單元測試 (Unit Test)、整合測試 (Integration Test)、Test Double (Mock/Stub/Spy) 策略、生命週期管理與常見反模式。
+name: test-backend
+description: '為 Node.js Controller、Service 或 Repository 撰寫、補齊或審查測試，套用單元測試、整合測試、Test Double、生命週期與命名規範。'
 ---
 
-# 後端測試全面規範 (Backend Testing Guidelines)
+# 後端測試撰寫與規範
 
 > 速查：本 skill 同目錄附精簡速查檔 `testing-conventions.md`。
+
+先讀取測試目標並判斷其架構層級，再依下列規範產生或審查測試。涵蓋成功路徑、錯誤路徑與邊界情境，完成後執行專案既有的後端測試指令。
 
 本文件規範 Node.js 後端專案中各層級的測試標準，確保測試具備高覆蓋率、高穩定性與好維護的特性。
 
@@ -44,9 +45,9 @@ description: >
 ### 2.2 AfterAll
 - **整合/DB 測試**：在 `afterAll` 必須包含 `force: true` 的刪除操作以清空產生的測試資料，最後務必 `close()` 關閉資料庫連線，避免佔用連線池。
 
-📌 **嚴禁事項：**
-❌ 在中途手動留下髒資料給下一個測試檔。
-❌ 不清空資料庫就關閉連線。
+**嚴禁事項：**
+- 不得在中途手動留下髒資料給下一個測試檔。
+- 不得在未清空測試資料時直接關閉連線。
 
 ---
 
@@ -61,7 +62,7 @@ description: >
    - 用於驗證一個方法「是否被正確呼叫」、「傳入次數」與「傳入參數」，但**不改變原行為**。
    - 範例：`expect(emailService.send).toHaveBeenCalledWith(userEmail)`
 3. **不要過度 Mock**
-   - ⚠️ 反模式：把所測物件的內部私有方法也 Mock 掉。只 Mock「邊界依賴」(如 DB、Redis、第三方 API)。
+   - 反模式：把所測物件的內部私有方法也 Mock 掉。只 Mock「邊界依賴」(如 DB、Redis、第三方 API)。
 
 ---
 
@@ -76,14 +77,14 @@ description: >
 在整合測試中，我們專注於 Controller，因此通常建議 Mock 掉繁瑣的驗證或紀錄：
 
 ```javascript
-// ✅ Mock 權限驗證 (以便專注測 Controller 行為)
+// Mock 權限驗證，以便專注測 Controller 行為
 const mockUser = { userId: "uuid", roles: [{ roleName: "admin" }] };
 jest.mock("@middleware/auth", () => ({
   authenticated: (req, res, next) => { req.user = mockUser; next(); },
   // ... 其他驗證皆直接 next()
 }));
 
-// ✅ Mock Logger (減少測試雜訊)
+// Mock Logger，減少測試雜訊
 jest.mock("@middleware/operateLogger", () => (req, res, next) => next());
 ```
 
@@ -101,13 +102,13 @@ expect(res.body.data).toHaveProperty("id"); // 確認資料結構
 
 為了保持測試的高品質，嚴格禁止以下寫法：
 
-1. ❌ **為了測試而去修改 Production Code**
+1. **為了測試而去修改 Production Code**
    - 測試應該適應程式，而不是反過來。
-2. ❌ **直接呼叫 Controller 函式**
+2. **直接呼叫 Controller 函式**
    - 整合測試必須透過 `supertest` 發動 HTTP 請求，驗證完整 Request/Response 週期。
-3. ❌ **斷言內部變數或實作細節**
+3. **斷言內部變數或實作細節**
    - 測試應該只驗證「對外可觀察結果」(回傳值、State、或是被 Mock 的邊界是否有正確參數傳入)。
-4. ❌ **一個 `it` 裡面塞了三種不同邏輯 (Fat Tests)**
+4. **一個 `it` 裡面塞了三種不同邏輯 (Fat Tests)**
    - 一個 `it` 最好只專注一件事。例如：「建立失敗(缺少參數)」、「建立失敗(權限不足)」、「建立成功」應該是三個獨立的 `it`。
 
 ---

@@ -102,7 +102,7 @@ def get_user(user_id: int) -> Optional[Dict[str, Any]]:
 
 ## 審查流程
 
-1. **載入詳細規則**：使用 `Glob` 列出 `code-reviewer skill 的 rules/` 目錄，再用 `Read` 逐一讀取所有 `.md` 檔案，取得最完整的 checklist（含 SQL Injection、XSS 等完整範例與框架解法）
+1. **載入詳細規則**：先讀取 `code-review` skill 的 `references/review-guidelines.md`，再使用 `Glob` 列出 `references/rules/` 目錄並用 `Read` 逐一讀取所有 `.md` 檔案，取得最完整的 checklist（含 SQL Injection、XSS 等完整範例與框架解法）
 2. 使用 `Read`、`Glob`、`Grep` 工具掌握審查範圍（PR diff、指定檔案、或工作區變更）
 3. 依照四個維度逐一分析，並對照步驟 1 載入的 rules 進行交叉比對
 4. 以繁體中文產出結構化報告

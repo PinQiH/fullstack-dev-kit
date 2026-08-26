@@ -1,13 +1,15 @@
 ---
-name: code-reviewer
-description: >
-  請使用這個技能來進行 Code Review。支援本地端變更 (Staged 或 Working Tree) 
-  以及遠端 Pull Requests (透過 ID 或 URL 指定)。審查重點在於正確性、可維護性以及是否符合專案規範。
+name: code-review
+description: '審查本機 staged、working tree、指定檔案或遠端 Pull Request 的正確性、安全性、效能、可維護性與測試完整性。'
 ---
 
-# 程式碼審查 (Code Reviewer)
+# 程式碼審查
 
-此技能指導 Agent 針對本地端的開發變更或是遠端的 Pull Requests，進行專業且徹底的程式碼審查 (Code Review)。
+針對本機開發變更或遠端 Pull Request 進行完整的 Code Review。預設只執行唯讀檢查，不切換分支、不修改檔案，也不提交審查結果到遠端；需要這些動作時先取得使用者授權。
+
+## 必讀參考
+
+開始審查前先讀取 [詳細審查指南](references/review-guidelines.md)，再依變更內容載入其中連結的 `references/rules/` 詳細規則。至少涵蓋正確性與可維護性；涉及資料庫、輸出內容或查詢效能時，另外載入 SQL injection、XSS 與 N+1 對應規則。
 
 ## 審查工作管線 (Workflow)
 
@@ -18,15 +20,12 @@ description: >
 ### 2. 準備工作 (Preparation)
 
 #### 針對遠端 PRs：
-1.  **Checkout**：使用 GitHub CLI 切換到該 PR 的分支。
-    ```bash
-    gh pr checkout <PR_NUMBER>
-    ```
-2.  **執行檢查 (Preflight)**：執行專案標準的驗證腳本，及早捕捉自動化測試的錯誤。
+1.  **唯讀取得內容**：優先使用 GitHub CLI 讀取 PR 描述、留言與 diff，不切換目前分支。
+2.  **執行檢查 (Preflight)**：若需要執行專案標準的驗證腳本，先向使用者說明時間與環境影響。
     ```bash
     npm run preflight
     ```
-3.  **了解上下文 (Context)**：閱讀 PR 的描述與現有的留言，以理解這次變更的目標與歷史脈絡。
+3.  **了解上下文 (Context)**：閱讀 PR 的描述與現有留言，以理解變更目標與歷史脈絡。
 
 #### 針對本地端變更：
 1.  **識別變更 (Identify Changes)**：
@@ -60,5 +59,6 @@ description: >
 *   清楚解釋**為什麼**要求修改。
 *   如果選擇通過 (Approve)，請肯定這份貢獻的具體價值。
 
-### 5. 清理環境 (Cleanup - 僅限遠端 PRs)
-*   審查結束後，請詢問使用者是否要將分支切換回預設分支 (例如：`main` 或是 `master`)。
+### 5. 完成條件
+*   回報所有具體 findings；若沒有問題，明確說明未發現需要阻擋的項目。
+*   說明已執行與未執行的驗證，不把未驗證內容描述成已確認。

@@ -1,7 +1,7 @@
 # 測試撰寫規範
 
 撰寫或審查測試程式碼時永遠遵守以下規則。
-完整的測試策略、分層說明與 Mock 技巧請參閱 `backend-testing-guidelines` skill。
+完整的測試策略、分層說明與 Mock 技巧請參閱 `test-backend` skill。
 
 ---
 

@@ -1,7 +1,7 @@
 {
 	"name": "backend-node",
-	"version": "0.1.1",
-	"description": "Node.js 後端的分層、資料庫與測試規範。",
+	"version": "0.2.0+codex.20260825100018",
+	"description": "Node.js 後端的分層、資料庫、文件與測試規範。",
 	"author": {
 		"name": "PinChi Huang",
 		"url": "https://github.com/PinQiH"
@@ -12,7 +12,7 @@
 	"interface": {
 		"displayName": "Backend Node",
 		"shortDescription": "Node.js 後端工程規範。",
-		"longDescription": "提供 Node.js 分層架構、資料庫命名與後端測試技能。",
+		"longDescription": "提供 Node.js 分層架構、資料庫命名，以及 api-doc、cronjob-doc、test-backend 跨平台工作流。",
 		"developerName": "PinChi Huang",
 		"category": "Developer Tools",
 		"capabilities": ["Skills"],

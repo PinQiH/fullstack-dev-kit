@@ -1,11 +1,12 @@
 ---
-description: 撰寫前端元件文件
+name: component-doc
+description: '為 Vue 元件或 Composable 撰寫可交接文件，涵蓋用途、Props、Emits、Slots、三態、無障礙、使用範例與相依風險。'
 ---
 
-# /component-doc — 前端元件文件
+# 前端元件文件
 
-撰寫 Vue 元件 / Composable 文件 SOP / Checklist，對應 `/api-doc` 的前端版本。
-（可僅在回應中產出，或產生臨時檔案）
+撰寫 Vue 元件 / Composable 文件 SOP / Checklist，對應 `api-doc` 的前端版本。
+不一定要產出實體檔案，可直接在回應中提供內容；只有使用者要求時才建立文件。
 
 搭配 `vue-nuxt-guidelines` 與 `ux-heuristics` skill 使用。
 

@@ -85,8 +85,8 @@ CASE D：涉及測試撰寫
 偵測到：test, spec, vitest, describe, it, expect, vi.mock, Playwright
 
 強制執行：
-1. 前端測試已改由獨立 skill 負責：載入 `frontend-testing-guidelines`（Vitest 單元 + Playwright E2E 骨架、命名與 Mock 策略）
-2. 後端測試規範另見 `backend-testing-guidelines`
+1. 前端測試已改由獨立 skill 負責：載入 `test-frontend`（Vitest 單元 + Playwright E2E 骨架、命名與 Mock 策略）
+2. 後端測試規範另見 `test-backend`
 ```
 
 ### CASE E：涉及命名、檔案結構、目錄設計

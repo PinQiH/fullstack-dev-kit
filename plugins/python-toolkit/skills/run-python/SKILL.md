@@ -1,8 +1,9 @@
 ---
-description: 執行 Python 程式與管理虛擬環境
+name: run-python
+description: '在隔離的虛擬環境中檢查相依、執行指定 Python 程式並回報 exit code、輸出與錯誤，不污染系統 Python。'
 ---
 
-# /run-python — Python 程式執行
+# Python 程式執行
 
 Python 程式執行 Workflow SOP（含虛擬環境）
 
@@ -55,7 +56,7 @@ Python 程式執行 Workflow SOP（含虛擬環境）
 ## 3. 相依套件檢查與安裝
 
 - 已確認需求來源（requirements.txt / pyproject.toml）
-- 已安裝相依套件
+- 若缺少相依套件，先告知使用者再依專案既有鎖定檔安裝
 - 套件安裝失敗即中止 workflow
 - 無未鎖版套件（避免不穩定）
 

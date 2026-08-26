@@ -21,7 +21,10 @@
 
 ## 已安裝技能
 
-- 全端工作流：`team-standards`、`comment-conventions`、`git-workflow`、`code-reviewer`、`debugger`、`decision-helper`、`project-planner`、`senior-architect`。
+- 全端工作流：`team-standards`、`comment-conventions`、`git-workflow`、`git-commit`、`code-review`、`security-review`、`debug`、`decision-helper`、`project-planner`、`senior-architect`。
+- 後端快捷工作流：`api-doc`、`cronjob-doc`、`test-backend`。
+- 前端快捷工作流：`component-doc`、`test-frontend`。
+- Python 快捷工作流：`run-python`。
 - Node.js、資料庫與後端測試：安裝 `backend-node` 後使用對應技能。
 - Vue/Nuxt、UX 與前端測試：安裝 `frontend-vue` 後使用對應技能。
 - Python 與虛擬環境：安裝 `python-toolkit` 後使用對應技能。

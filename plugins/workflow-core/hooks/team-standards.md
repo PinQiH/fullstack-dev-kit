@@ -17,5 +17,5 @@
 - 註解遵循 Todo-Tree 標記格式（詳見 `comment-conventions` skill）。
 
 ## 對應 skill（需要時自動載入）
-- Node 後端規範 → `nodejs-guidelines`；DB 命名 → `database-design`；後端測試 → `backend-testing-guidelines`
-- Vue/Nuxt 架構 → `vue-nuxt-guidelines`；UX → `ux-heuristics`；前端測試 → `frontend-testing-guidelines`
+- Node 後端規範 → `nodejs-guidelines`；DB 命名 → `database-design`；後端測試 → `test-backend`
+- Vue/Nuxt 架構 → `vue-nuxt-guidelines`；UX → `ux-heuristics`；前端測試 → `test-frontend`
