@@ -16,7 +16,7 @@ Codex：      $backend-node:test-backend
 | Plugin | 適用情境 | 共用 Skills | Claude Code 增強 |
 | --- | --- | --- | --- |
 | `workflow-core` | 團隊標準、Code Review、除錯、Git、安全、決策與架構 | 10 | agents、hooks |
-| `backend-node` | Node.js 分層、資料庫、API、排程與後端測試 | 5 | 無 |
+| `backend-node` | Node.js／NestJS 分層、資料庫、API、排程與後端測試 | 6 | 無 |
 | `frontend-vue` | Vue 3、Nuxt 3、TypeScript、UX、元件文件與測試 | 4 | 無 |
 | `python-toolkit` | Python 開發、Code Review、venv 與程式執行 | 3 | agent |
 
@@ -52,6 +52,7 @@ Codex：      $backend-node:test-backend
 | `workflow-core` | `project-planner` | 任務拆解、相依性、時程與里程碑 |
 | `workflow-core` | `senior-architect` | 系統設計、ADR、技術選型與架構圖 |
 | `backend-node` | `nodejs-guidelines` | Node.js 分層、非同步、Repository 與 Controller |
+| `backend-node` | `nestjs-guidelines` | NestJS Module、DI、DTO、Pipes、Filters、Guards 與維運 |
 | `backend-node` | `database-design` | 資料庫、資料表、欄位與 SQL 命名及設計 |
 | `frontend-vue` | `vue-nuxt-guidelines` | Vue／Nuxt 架構、Service、TypeScript 與品質閘門 |
 | `frontend-vue` | `ux-heuristics` | Nielsen 啟發式、三態、表單與無障礙 |
