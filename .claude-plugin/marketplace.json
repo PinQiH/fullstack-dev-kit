@@ -18,7 +18,7 @@
       "source": "./plugins/backend-node",
       "version": "0.2.0",
       "license": "MIT",
-      "description": "Node.js 後端：分層、DB、文件與測試規範，提供 api-doc、cronjob-doc、test-backend 跨平台 skills。"
+      "description": "Node.js / NestJS 後端：分層、DB、錯誤處理、文件與測試規範，提供 api-doc、cronjob-doc、test-backend 跨平台 skills。"
     },
     {
       "name": "frontend-vue",

@@ -27,5 +27,7 @@ description: '全端團隊的共用技術標準。開始任何程式碼修改、
 ## 延伸規範
 
 - Node.js、資料庫與後端測試：使用 `backend-node` plugin 中的對應 skill。
+- NestJS 專案：撰寫或修改任何 NestJS 程式碼前，先載入 `backend-node` plugin 的 `nestjs-guidelines`；
+  該規範涵蓋分層邊界、Module／Controller／DTO／Entity 慣例、`AppError` 錯誤體系、統一回應格式、交易管理、稽核與 Migration。
 - Vue/Nuxt、UX 與前端測試：使用 `frontend-vue` plugin 中的對應 skill。
 - Python 與虛擬環境：使用 `python-toolkit` plugin 中的對應 skill。

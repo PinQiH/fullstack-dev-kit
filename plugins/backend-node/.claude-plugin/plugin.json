@@ -1,8 +1,8 @@
 {
   "name": "backend-node",
   "version": "0.2.0",
-  "description": "Node.js 後端開發規範與跨平台 api-doc、cronjob-doc、test-backend skills，涵蓋分層、命名、非同步、資料庫與測試。",
+  "description": "Node.js 與 NestJS 後端開發規範，另附跨平台 api-doc、cronjob-doc、test-backend skills，涵蓋分層、命名、非同步、錯誤處理、資料庫與測試。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",
-  "keywords": ["nodejs", "backend", "database", "testing", "api"]
+  "keywords": ["nodejs", "nestjs", "backend", "database", "testing", "api"]
 }

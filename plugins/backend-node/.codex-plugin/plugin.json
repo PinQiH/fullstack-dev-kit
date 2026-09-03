@@ -1,23 +1,24 @@
 {
 	"name": "backend-node",
 	"version": "0.2.0+codex.20260825100018",
-	"description": "Node.js 後端的分層、資料庫、文件與測試規範。",
+	"description": "Node.js 與 NestJS 後端的分層、資料庫、錯誤處理、文件與測試規範。",
 	"author": {
 		"name": "PinChi Huang",
 		"url": "https://github.com/PinQiH"
 	},
 	"license": "MIT",
-	"keywords": ["nodejs", "backend", "database", "testing", "api"],
+	"keywords": ["nodejs", "nestjs", "backend", "database", "testing", "api"],
 	"skills": "./skills/",
 	"interface": {
 		"displayName": "Backend Node",
-		"shortDescription": "Node.js 後端工程規範。",
-		"longDescription": "提供 Node.js 分層架構、資料庫命名，以及 api-doc、cronjob-doc、test-backend 跨平台工作流。",
+		"shortDescription": "Node.js / NestJS 後端工程規範。",
+		"longDescription": "提供 Node.js 分層架構、NestJS Module／DTO／AppError／交易與稽核慣例、資料庫命名，以及 api-doc、cronjob-doc、test-backend 跨平台工作流。",
 		"developerName": "PinChi Huang",
 		"category": "Developer Tools",
 		"capabilities": ["Skills"],
 		"defaultPrompt": [
 			"依 Node.js 後端規範協助我實作這個功能。",
+			"依 NestJS 開發規範檢視這個 Module 的分層與錯誤處理。",
 			"為這個 Node.js 模組補齊測試。"
 		]
 	}
