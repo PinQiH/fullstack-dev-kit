@@ -52,7 +52,7 @@ Codex：      $backend-node:test-backend
 | `workflow-core` | `project-planner` | 任務拆解、相依性、時程與里程碑 |
 | `workflow-core` | `senior-architect` | 系統設計、ADR、技術選型與架構圖 |
 | `backend-node` | `nodejs-guidelines` | Node.js 分層、非同步、Repository 與 Controller |
-| `backend-node` | `nestjs-guidelines` | NestJS Module、DI、DTO、Pipes、Filters、Guards 與維運 |
+| `backend-node` | `nestjs-guidelines` | NestJS 分層、DTO、AppError、統一回應、交易、稽核與 Migration |
 | `backend-node` | `database-design` | 資料庫、資料表、欄位與 SQL 命名及設計 |
 | `frontend-vue` | `vue-nuxt-guidelines` | Vue／Nuxt 架構、Service、TypeScript 與品質閘門 |
 | `frontend-vue` | `ux-heuristics` | Nielsen 啟發式、三態、表單與無障礙 |
