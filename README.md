@@ -157,6 +157,30 @@ plugins/<plugin-name>/
 - `description` 必須描述功能、適用情境與重要邊界，讓兩個平台能正確路由
 - 一般 README、reference 與 attribution 文件不是功能入口，不強制加入 frontmatter
 
+## 本機驗證與維護
+
+在 repository 根目錄執行（需要 Node.js 20 以上，不需安裝套件）：
+
+```powershell
+node scripts/validate-plugins.mjs
+node --test scripts/validate-plugins.test.mjs
+git diff --check
+```
+
+驗證器檢查兩平台的 plugin 清單、來源、基礎版本、skill 名稱與 description、
+入口的相對 Markdown 檔案連結，以及 hook 腳本是否存在；也列出各入口的行數與 UTF-8 大小。
+它只檢查本 kit 的封裝契約，不取代完整 YAML／平台 schema 驗證、網路連結檢查或實際載入測試。
+
+大型 skill 入口只保留適用範圍、核心限制與任務索引；詳細規範放在 `references/`，按任務讀取。
+`nodejs-guidelines` 將共用編碼與 Express／Sequelize 範本分開；`nestjs-guidelines` 依分層、HTTP、
+資料存取、啟動與品質分題。`nodejs-conventions.md` 保留舊路徑並導向單一來源。
+
+更新後開啟新 task，手動驗證：
+
+- 請 agent 使用 `nestjs-guidelines` 檢查 DTO：應讀取 HTTP 驗證章節，保留 DTO 的執行期 import。
+- 指定 NestJS 專案：不應套用 Sequelize 的 `generalRepo` 或「全部回 200」慣例。
+- 指定既有 Express／Sequelize 專案：仍可找到 Repository、Model 與回應契約範例。
+
 ## 更新
 
 Claude Code：

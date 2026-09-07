@@ -1,6 +1,6 @@
 {
 	"name": "backend-node",
-	"version": "0.2.0+codex.20260825100018",
+	"version": "0.3.0+codex.20260907112205",
 	"description": "Node.js 與 NestJS 後端的分層、資料庫、錯誤處理、文件與測試規範。",
 	"author": {
 		"name": "PinChi Huang",
