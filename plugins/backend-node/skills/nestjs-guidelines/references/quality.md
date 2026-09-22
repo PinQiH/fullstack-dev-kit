@@ -120,7 +120,7 @@ export type PermissionCode = (typeof PERMISSION)[keyof typeof PERMISSION];
 | 變數、函式、class 名                        | 英文               |
 | `logger.*()` 訊息                         | **英文**     |
 | 環境變數驗證訊息                            | **英文**     |
-| `rtnMsg`、`AppError` 訊息、DTO 驗證訊息 | **繁體中文** |
+| `error.message`、`AppError` 訊息、DTO 驗證訊息 | **繁體中文** |
 | Swagger 的 summary／description             | 繁體中文           |
 
 判準：**終端使用者看得到的用中文，工程師與機器看的用英文。**
@@ -141,7 +141,7 @@ export type PermissionCode = (typeof PERMISSION)[keyof typeof PERMISSION];
 | path alias                             | 要處理三處解析，且`baseUrl` 將失效                    |
 | 業務模組標`@Global()`                | 依賴關係變隱晦                                          |
 | `@RequireRoles()`                    | 程式碼認得具體角色，RBAC 失去意義                       |
-| 刪除回 204                             | 無法攜帶`rtnCode`，前端要寫例外                       |
+| 刪除回 204                             | 無法攜帶信封，前端要寫例外                            |
 | 為幾十行程式碼引入套件                 | 已自寫`SnakeNamingStrategy`、Valkey throttler storage |
 | `repository.delete(criteria)` 直接用 | 繞過稽核與稽查員，無聲漏記                              |
 | `Promise.all` 平行跑 bcrypt          | 一口氣佔滿只有 4 條的 libuv 執行緒池                    |

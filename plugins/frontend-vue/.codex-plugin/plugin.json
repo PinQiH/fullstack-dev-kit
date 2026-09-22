@@ -1,6 +1,6 @@
 {
 	"name": "frontend-vue",
-	"version": "0.2.0+codex.20260825100018",
+	"version": "0.3.0+codex.20260922152757",
 	"description": "Vue 3 與 Nuxt 3 的架構、UX、元件文件與測試規範。",
 	"author": {
 		"name": "PinChi Huang",

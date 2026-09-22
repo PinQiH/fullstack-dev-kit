@@ -63,13 +63,13 @@ Swagger 那組通常很長，集中在最上面才不會把真正影響行為的
 
 ### 4.3 Controller 只回傳資料本體
 
-不要自己包 `{ rtnCode, rtnMsg, data }`，那是 `ResponseInterceptor` 的事。
+不要自己包 `{ success, data, meta, error }`，那是 `ResponseInterceptor` 的事。
 
 ### 4.4 回應狀態碼
 
 - `@Post` 建立資源用預設 201，**不要明寫**（明寫會讓人以為有特殊考量）
 - 登入這類非建立行為的 POST 要 `@HttpCode(HttpStatus.OK)`
-- **刪除用 200 不用 204**：204 依定義不得帶 body，也就無法攜帶 `rtnCode`，
+- **刪除用 200 不用 204**：204 依定義不得帶 body，也就無法攜帶信封，
   前端得為刪除單獨寫例外處理。統一格式的價值來自「沒有例外」
 
 ### 4.5 重複的 Swagger 裝飾器抽成區域函式
@@ -78,7 +78,7 @@ Swagger 那組通常很長，集中在最上面才不會把真正影響行為的
 const apiTodoNotFoundResponse = (): MethodDecorator =>
 	ApiErrorResponse(
 		HttpStatus.NOT_FOUND,
-		RTN_CODE.NOT_FOUND,
+		'TODO_NOT_FOUND',
 		'指定的待辦事項不存在',
 		'找不到 id 為 xxx 的待辦事項',
 	);
@@ -91,16 +91,33 @@ const apiTodoNotFoundResponse = (): MethodDecorator =>
 ### 6.1 錯誤體系
 
 ```
-AppError（abstract，自帶 httpStatus 與 rtnCode）
-├── NotFoundError        404 / 4040
-├── ValidationError      422 / 4220
-├── AuthenticationError  401 / 4010
-├── PermissionError      403 / 4030
-├── ConflictError        409 / 4090
-└── RateLimitError       429 / 4290
+AppError（abstract，自帶 httpStatus 與預設 errorCode）
+├── NotFoundError        404 / RESOURCE_NOT_FOUND
+├── ValidationError      422 / VALIDATION_FAILED
+├── AuthenticationError  401 / AUTH_NOT_AUTHENTICATED
+├── PermissionError      403 / PERMISSION_DENIED
+├── ConflictError        409 / RESOURCE_CONFLICT
+└── RateLimitError       429 / TOO_MANY_REQUESTS
 ```
 
 Filter 只負責取出來用，不做判斷。
+
+上面列的是**預設碼**。業務模組應傳入更精確的碼，前端才分辨得出是哪一種找不到：
+
+```ts
+throw new NotFoundError('找不到指定的文件', { code: 'DOCUMENT_NOT_FOUND' });
+```
+
+### 6.1.1 錯誤碼的形式
+
+用**語意大寫字串**（`DOCUMENT_NOT_FOUND`），不要用數字流水號（`4040`、`4041`）。
+
+數字碼的問題是它只把 HTTP 狀態碼再抄一遍：要區分「找不到文件」與「找不到使用者」時，
+得另外維護一張碼表，而呼叫端讀到 `4041` 完全不知道是什麼。語意字串本身就是那張表。
+這也是 Stripe、GitHub、Slack 等公開 API 的做法。
+
+!! 錯誤碼是對外契約的一部分，**發布後只能新增不能更名**。
+要改語意請改 `message`，不要動 `code`。
 
 ### 6.2 安全邊界
 
@@ -134,13 +151,26 @@ handleRequest<TUser>(error: unknown, user: TUser): TUser {
 
 ## 七、回應格式
 
+成功與失敗共用同一組頂層欄位，呼叫端只需一套解析邏輯：
+
 ```ts
-{ rtnCode: '0000', rtnMsg: '成功', data: ... }
+// 成功
+{ success: true,  data: ...,  meta: { trace_id: '…' },              error: null }
+
+// 失敗
+{ success: false, data: null, meta: { trace_id: '…' }, error: { code, message, details? } }
 ```
 
-- 由 `ResponseInterceptor` 統一包裝，Controller 不參與
+- **成敗以 HTTP 狀態碼為準**，`success` 是給中間代理層改寫狀態碼時的第二道保險，
+  不是判斷成敗的主要依據。業務錯誤一律回真實的 4xx，不要一律回 200
+- 由 `ResponseInterceptor` 統一包裝，Controller 只 `return` 資料本身
 - `data` 為 `undefined` 時轉成 `null`——JSON 序列化會丟掉 undefined 欄位，
   導致前端有時看得到 `data`、有時看不到
+- `meta` 一律是物件而非選填，前端可直接取用不必先判空
 - 需要原生格式的端點（如 terminus 的健康檢查）標 `@RawResponse()`
-- 分頁結果整包放 `data` 內（`data.items` / `data.total`），
-  維持「頂層永遠只有三個欄位」
+- 分頁結果攤開：`items` 進 `data`、`total` / `page` / `limit` 進 `meta`，
+  前端拿到的 `data` 就是乾淨的陣列，不必每次剝一層 `items`
+- `error.details` 只有驗證失敗才有，格式為 `{ field, message }[]`，
+  供前端在對應輸入框下方顯示紅字；只給一整串合併訊息的話，前端只能做字串比對
+- `trace_id` 對應伺服器日誌的 `x-request-id`，使用者回報問題時附上即可查到那一次請求。
+  刻意採 snake_case 以對齊既有前端已在使用的欄位名

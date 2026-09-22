@@ -1,6 +1,6 @@
 {
   "name": "frontend-vue",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Vue 3 / Nuxt 3 前端規範與跨平台 component-doc、test-frontend skills，涵蓋架構、TypeScript、UX 與測試。部分 skill fork 自 MIT 專案，見各 skill 的 ATTRIBUTION.md。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",

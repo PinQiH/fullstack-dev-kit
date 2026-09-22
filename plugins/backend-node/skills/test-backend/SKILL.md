@@ -92,7 +92,7 @@ jest.mock("@middleware/operateLogger", () => (req, res, next) => next());
 每個整合測試成功案例**至少**驗證：
 ```javascript
 expect(res.status).toBe(200);
-expect(res.body.rtnCode).toBe("0000");   // 確認系統自定義成功碼
+expect(res.body.success).toBe(true);        // 確認信封標示成功
 expect(res.body.data).toHaveProperty("id"); // 確認資料結構
 ```
 

@@ -86,7 +86,7 @@ type UserType = {
  * @param {number} params.page - 頁碼（默認：1）
  * @param {number} params.size - 每頁筆數（默認：10）
  * @param {string} [params.status] - 問卷狀態（可選）
- * @returns {Promise<{rtnCode: string, rtnMsg: string, data: any[]}>} 問卷列表
+ * @returns {Promise<ApiResponse<Survey[]>>} 問卷列表（信封格式）
  * @throws {Error} API 請求失敗時拋出
  * @example
  * const result = await getUserSurveys({ page: 1, size: 20 })
@@ -141,16 +141,24 @@ function fetchUserData(userId: string) {
 
 ```typescript
 // 1. API 回應統一型別
-interface ApiResponse<T = any> {
-  rtnCode: string;
-  rtnMsg: string;
+interface ApiError {
+  code: string;      // 語意大寫字串，例如 DOCUMENT_NOT_FOUND
+  message: string;
+  details?: { field: string; message: string }[];  // 僅驗證失敗
+}
+
+interface ResponseMeta {
+  trace_id?: string;
+  total?: number;    // 分頁查詢才有
+  page?: number;
+  limit?: number;
+}
+
+interface ApiResponse<T = unknown> {
+  success: boolean;
   data: T | null;
-  pagination?: {
-    currentPage: number;
-    pageSize: number;
-    totalCount: number;
-    totalPages: number;
-  };
+  meta: ResponseMeta;
+  error: ApiError | null;
 }
 
 // 2. Vue 組件 Props

@@ -148,5 +148,5 @@ async createUser(payload: CreateUserRequest): Promise<UserResponse> {
 
 ### 9.5 錯誤與 Response 處理
 
-- 將所有 Error 轉換為標準 `rtnCode` 與 `rtnMsg` (透過 Middleware 統整)。
+- 將所有 Error 轉換為標準信封的 `error.code` 與 `error.message`（透過 Middleware 統整）。
 - 始終回傳統一格式，Frontend 不需要為特殊 API 寫額外處理。

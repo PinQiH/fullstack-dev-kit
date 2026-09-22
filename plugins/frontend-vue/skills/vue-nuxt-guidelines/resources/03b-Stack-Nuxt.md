@@ -82,7 +82,7 @@ const { data, status, refresh } = await useAsyncData(
   'unique-key',
   async () => {
     const res = await $fetch('/api/proxy', { params: { url: 'endpoint' } })
-    return res.rtnCode === '0000' ? res.data : []
+    return res.data ?? []
   },
   { server: true, immediate: true }
 )

@@ -135,10 +135,15 @@ export const unwrap = <T, E>(result: Result<T, E>): T => {
 ```typescript
 // src/types/errors.ts
 
+// 前端自己的錯誤分類，刻意與後端 error.code 分開：
+// 後端的碼是領域層級的（DOCUMENT_NOT_FOUND、GROUP_NAME_CONFLICT…）且會持續新增，
+// 前端只需要「要不要分支處理」這個粒度，由 Service 層負責映射
 export enum ErrorCode {
   UNKNOWN = 'UNKNOWN',
   NOT_FOUND = 'NOT_FOUND',
   UNAUTHORIZED = 'UNAUTHORIZED',
+  FORBIDDEN = 'FORBIDDEN',
+  CONFLICT = 'CONFLICT',
   VALIDATION_ERROR = 'VALIDATION_ERROR',
   NETWORK_ERROR = 'NETWORK_ERROR',
 }
@@ -221,14 +226,14 @@ async function handleErrorResponse(error) {
     case 502:
     case 503:
     case 504:
-      showAlert(response.data?.rtnMsg || '伺服器異常，請聯絡管理人員！', 'error');
+      showAlert(response.data?.error?.message || '伺服器異常，請聯絡管理人員！', 'error');
       break;
 
     // 3. 業務級錯誤（4xx）- 檢查 skipGlobalErrorHandler
     default:
       // 關鍵：檢查是否要跳過全域錯誤處理
       if (!config?.skipGlobalErrorHandler) {
-        const apiMessage = response.data?.rtnMsg || response.data?.message || '發生未知錯誤';
+        const apiMessage = response.data?.error?.message || '發生未知錯誤';
         showAlert(apiMessage);
       }
       break;
@@ -275,33 +280,51 @@ export async function getUserProfile(userId) {
       return fail(new AppError('伺服器無回應資料', ErrorCode.NETWORK_ERROR));
     }
 
-    const { rtnCode, rtnMsg, data } = res;
-
-    if (rtnCode === '0000') {
-      return ok(data);
-    }
-
-    // 業務錯誤：轉換為 AppError
-    const errorCode = rtnCode === '0001' ? ErrorCode.NOT_FOUND : ErrorCode.UNKNOWN;
-    return fail(new AppError(rtnMsg || '資料取得失敗', errorCode));
+    // 能走到這裡代表 HTTP 2xx，信封的 data 就是要的資料
+    return ok(res.data);
 
   } catch (error) {
-    // 例外錯誤捕捉（網路錯誤、Axios 錯誤等）
+    // 業務錯誤（4xx）與傳輸錯誤都會走到這裡：後端以真實狀態碼表示失敗，
+    // axios 對非 2xx 一律 reject，因此不需要再檢查任何成功旗標
     console.error(`❌ [Service:getUserProfile]`, error);
-    
-    const errorCode = error.response?.status === 404 
-      ? ErrorCode.NOT_FOUND 
-      : ErrorCode.UNKNOWN;
-    
+
+    const apiError = error.response?.data?.error;
+
     return fail(
       new AppError(
-        error.response?.data?.rtnMsg || error.message || '服務層錯誤',
-        errorCode
+        apiError?.message || error.message || '服務層錯誤',
+        toErrorCode(apiError?.code, error.response?.status),
+        apiError?.details
       )
     );
   }
 }
+
+/**
+ * 後端錯誤碼 → 前端 ErrorCode
+ * 優先看 error.code（語意明確且穩定），取不到才退回 HTTP 狀態碼。
+ * 只映射前端「真的要分支處理」的少數幾種，其餘一律 UNKNOWN 由訊息呈現即可。
+ */
+function toErrorCode(code, status) {
+  switch (code) {
+    case 'VALIDATION_FAILED':      return ErrorCode.VALIDATION_ERROR;
+    case 'AUTH_NOT_AUTHENTICATED': return ErrorCode.UNAUTHORIZED;
+    case 'PERMISSION_DENIED':      return ErrorCode.FORBIDDEN;
+    case 'RESOURCE_CONFLICT':      return ErrorCode.CONFLICT;
+  }
+
+  // 領域專屬碼（DOCUMENT_NOT_FOUND、USER_NOT_FOUND…）一律視為 NOT_FOUND
+  if (code?.endsWith('_NOT_FOUND')) return ErrorCode.NOT_FOUND;
+
+  if (status === 404) return ErrorCode.NOT_FOUND;
+  if (status === 422) return ErrorCode.VALIDATION_ERROR;
+
+  return ErrorCode.UNKNOWN;
+}
 ```
+
+> **不要用 `message` 做分支**。訊息是給人看的，後端改個文案前端就失效；
+> `error.code` 是對外契約，發布後只會新增不會更名。
 
 ---
 

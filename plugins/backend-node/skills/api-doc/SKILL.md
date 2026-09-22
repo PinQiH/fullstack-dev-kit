@@ -95,22 +95,25 @@ description: '為新增或修改的 API 撰寫可交接的規格文件，涵蓋�
 
 ## 6. 回傳訊息（Response）
 
-- 已定義所有 rtnCode / rtnMsg
+- 已定義所有 `error.code`
 - 已區分成功與失敗情境
-- rtnCode 有一致命名規則
-- 已說明錯誤發生條件
+- 錯誤碼有一致命名規則（語意大寫字串，非數字流水號）
+- 已列出每個錯誤碼對應的 HTTP 狀態碼與發生條件
 
 **完成標準**：
 
 > 呼叫端知道怎麼判斷結果。
 
-### 回傳碼表（範例）
+### 錯誤碼表（範例）
 
-| `rtnCode` | `rtnMsg`          |
-| --------- | ----------------- |
-| 0000      | Success           |
-| 1001      | Invalid parameter |
-| 2001      | Permission denied |
+| HTTP | `error.code`        | 發生條件                   |
+| ---- | ------------------- | -------------------------- |
+| 400  | INVALID_PARAMETER   | 參數格式正確但語意不合法   |
+| 403  | PERMISSION_DENIED   | 已登入但無此操作權限       |
+| 404  | DOCUMENT_NOT_FOUND  | 指定的文件不存在或已刪除   |
+| 422  | VALIDATION_FAILED   | DTO 驗證未通過，帶 details |
+
+!! 錯誤碼是對外契約，**發布後只能新增不能更名**；要改語意請改 `message`。
 
 ---
 
@@ -122,10 +125,35 @@ description: '為新增或修改的 API 撰寫可交接的規格文件，涵蓋�
 
 ```json
 {
-  "rtnCode": "0000",
-  "rtnMsg": "Success",
+  "success": true,
   "data": {
     "result": true
+  },
+  "meta": {
+    "trace_id": "0f9c4c1e-4f6b-4a5f-9a3f-2b0f1c7d8e90"
+  },
+  "error": null
+}
+```
+
+---
+
+### 失敗範例
+
+- 狀態碼與 `error.code` 一致
+- 驗證失敗有 `details`，供前端做欄位級提示
+
+```json
+{
+  "success": false,
+  "data": null,
+  "meta": {
+    "trace_id": "0f9c4c1e-4f6b-4a5f-9a3f-2b0f1c7d8e90"
+  },
+  "error": {
+    "code": "VALIDATION_FAILED",
+    "message": "輸入資料有誤",
+    "details": [{ "field": "title", "message": "標題不可為空" }]
   }
 }
 ```

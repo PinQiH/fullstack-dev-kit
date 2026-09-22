@@ -62,7 +62,7 @@ jest.spyOn(userService, '_validateInternal').mockReturnValue(true)
 
 ```javascript
 expect(res.status).toBe(200)
-expect(res.body.rtnCode).toBe("0000")
+expect(res.body.success).toBe(true)
 expect(res.body.data).toHaveProperty("id")
 ```
 

@@ -590,7 +590,8 @@ const { data, status, refresh, clear } = await useAsyncData(
       params: { url: 'endpoint', ...params }
     })
     
-    return res.rtnCode === '0000' ? res.data : []
+    // 非 2xx 會直接 throw，走到這裡即為成功
+    return res.data ?? []
   },
   {
     default: () => [],           // 預設值，需與回傳型別一致
@@ -750,8 +751,9 @@ export function useAPI() {
     
     // Response 攔截器
     onResponse({ response }) {
-      // 標準化成功回應
-      if (response._data?.rtnCode === '0000') {
+      // 標準化成功回應：拆掉信封，只把 data 交給呼叫端
+      // 失敗一律是非 2xx，由 onResponseError 處理，這裡不必判斷成敗
+      if (response._data?.success) {
         return response._data.data
       }
     },

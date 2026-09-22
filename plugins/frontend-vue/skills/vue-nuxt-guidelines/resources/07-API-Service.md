@@ -58,13 +58,36 @@ description: API 與 Service 層開發規範,涵蓋 Axios 配置、makeApiCall �
 > 後端 API 統一使用以下信封格式 (Envelope Pattern)：
 
 ```javascript
+// 成功（HTTP 2xx）
 {
-  rtnCode: string,        // 回傳代碼（0000: 成功）
-  rtnMsg: string,         // 回傳訊息（後端預設提供）
-  data: object | null,    // 實際資料內容
-  pagination: object | null, // 分頁資訊（若 API 支援分頁才提供）
+  success: true,
+  data: object | array | null,  // 實際資料內容
+  meta: {                       // 附帶資訊，一律是物件不會是 null
+    trace_id: string,           // 對應後端日誌，回報問題時附上
+    total?: number,             // 分頁查詢才有；items 已攤平進 data
+    page?: number,
+    limit?: number,
+  },
+  error: null,
+}
+
+// 失敗（HTTP 4xx / 5xx）
+{
+  success: false,
+  data: null,
+  meta: { trace_id: string },
+  error: {
+    code: string,               // 語意大寫字串，例如 DOCUMENT_NOT_FOUND
+    message: string,            // 可直接顯示給使用者
+    details?: { field: string; message: string }[],  // 僅驗證失敗
+  },
 }
 ```
+
+**成敗以 HTTP 狀態碼為準**，業務錯誤會回真實的 4xx 而非 200。
+`success` 只是代理層改寫狀態碼時的第二道保險，不要拿它當主要判斷依據。
+
+分支請依 `error.code` 而非 `message`——訊息是給人看的，改個文案就會讓前端邏輯失效。
 
 ### makeApiCall 標準簽名
 
@@ -95,7 +118,7 @@ case 500/502/503/504: showAlert('伺服器異常'); break;
 case NetworkError: showAlert('網路連線失敗'); break;
 
 // ❌ 業務邏輯錯誤 - 不在 Axios 處理，交由 Composable
-// rtnCode !== '0000' → 由 Service 包裝為 Result.error，Composable 決定 UI 行為
+// 400/403/404/409/422 → 由 Service 依 error.code 包裝為 Result.error，Composable 決定 UI 行為
 ```
 
 ---

@@ -165,29 +165,39 @@ await repository.generalRepo.bulkCreate(
 ### 6.2 API 回傳格式
 
 - HTTP Status Code
-  - 成功與業務錯誤皆回傳 `200`
-- 以 `rtnCode` 判斷結果
+  - **成敗以狀態碼為準**：成功 2xx、業務錯誤回真實的 4xx，不要一律回 `200`
+- 成功與失敗共用同一組頂層欄位，呼叫端只需一套解析邏輯
 
 ```jsx
-{
-  rtnCode: "0000",
-  rtnMsg: "成功",
-  data: {}
-}
+// 成功
+{ success: true,  data: {},   meta: { trace_id: "…" },              error: null }
 
+// 失敗
+{ success: false, data: null, meta: { trace_id: "…" }, error: { code, message, details } }
 ```
+
+- `error.code` 用語意大寫字串（`DOCUMENT_NOT_FOUND`），不用數字流水號——
+  數字碼只是把狀態碼再抄一遍，要區分「找不到文件」與「找不到使用者」時
+  還得另外維護一張碼表。**錯誤碼是對外契約，發布後只能新增不能更名**
+- `error.details` 只有驗證失敗才有，格式 `{ field, message }[]`，供前端做欄位級提示
+- 分頁：`items` 進 `data`、`total` / `page` / `limit` 進 `meta`
+- `meta.trace_id` 對應伺服器日誌，使用者回報問題時附上即可查到那一次請求
 
 ---
 
 ### 6.3 Error Code 與 Status 對應
 
-| 狀態碼 | 類型                  |
-| ------ | --------------------- |
-| 401    | AuthenticationError   |
-| 403    | PermissionError       |
-| 409    | DatabaseConflictError |
-| 422    | ValidationError       |
-| 500    | 系統錯誤              |
+| 狀態碼 | 類型                  | 預設 `error.code`      |
+| ------ | --------------------- | ---------------------- |
+| 401    | AuthenticationError   | AUTH_NOT_AUTHENTICATED |
+| 403    | PermissionError       | PERMISSION_DENIED      |
+| 404    | NotFoundError         | RESOURCE_NOT_FOUND     |
+| 409    | DatabaseConflictError | RESOURCE_CONFLICT      |
+| 422    | ValidationError       | VALIDATION_FAILED      |
+| 429    | RateLimitError        | TOO_MANY_REQUESTS      |
+| 500    | 系統錯誤              | INTERNAL_SERVER_ERROR  |
+
+表中是**預設碼**，業務端應傳入更精確的碼（`DOCUMENT_NOT_FOUND`）。
 
 ---
 
