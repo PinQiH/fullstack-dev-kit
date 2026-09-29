@@ -9,7 +9,7 @@
     {
       "name": "workflow-core",
       "source": "./plugins/workflow-core",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "license": "MIT",
       "description": "所有人的基座：跨平台 code-review / debug / git-commit / security-review / 決策 / 規劃 / 架構 skills，另附 Claude Code 團隊標準與安全 hooks。"
     },
@@ -23,14 +23,14 @@
     {
       "name": "frontend-vue",
       "source": "./plugins/frontend-vue",
-      "version": "0.3.0",
+      "version": "0.3.1",
       "license": "MIT",
       "description": "Vue 3 / Nuxt 3：架構、UX、元件文件與測試規範，提供 component-doc、test-frontend 跨平台 skills。"
     },
     {
       "name": "python-toolkit",
       "source": "./plugins/python-toolkit",
-      "version": "0.2.0",
+      "version": "0.2.1",
       "license": "MIT",
       "description": "Python：專家、venv 與程式執行規範，提供 run-python 跨平台 skill 與 Claude Code agent。"
     }

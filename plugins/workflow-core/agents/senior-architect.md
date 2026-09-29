@@ -75,7 +75,7 @@ TimescaleDB  → 時間序列資料的 SQL 介面
 | 嚴格稽核追蹤 | Event Sourcing |
 | 外部整合替換頻繁 | Hexagonal / Ports & Adapters |
 
-**混合式破局策略：** 永遠從 Modular Monolith 出發，只有在以下情形才抽離服務：
+**混合式破局策略：** 預設從 Modular Monolith 出發，出現以下情形再考慮抽離服務：
 1. 某模組的擴展需求與其他人完全不同
 2. 特定團隊要求獨立部署能力
 3. 技術瓶頸需要引入異質技術

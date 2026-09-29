@@ -57,7 +57,7 @@ description: >
 
 - 已確認需求來源（`requirements.txt` / `pyproject.toml`）
 - 在虛擬環境啟動的狀態下，使用 `pip install -r requirements.txt`。
-- **⚠️ 重要提醒：後續開發過程中，如果有主動使用 `pip install <package>` 安裝或更新任何套件，必須立刻執行 `pip freeze > requirements.txt`，確保相依套件清單隨時保持最新同步。**
+- 以 `requirements.txt` 管理相依的專案，之後每次 `pip install` 新增或更新套件，都要同步更新 `requirements.txt`，否則其他人重建環境時會缺套件；以 `pyproject.toml` 管理的專案改更新 `pyproject.toml`。
 - 套件安裝失敗即中止 workflow。
 - 無未鎖版套件（避免不穩定）。
 

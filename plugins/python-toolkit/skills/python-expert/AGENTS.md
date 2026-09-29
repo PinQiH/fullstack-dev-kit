@@ -70,7 +70,6 @@ def add_item(item: str, items: list[str] | None = None) -> list[str]:
     return items
 ```
 
-[➡️ 完整詳細內容: correctness-mutable-defaults.md](rules/correctness-mutable-defaults.md)
 
 ---
 
@@ -102,7 +101,6 @@ except FileNotFoundError:
     config = get_default_config()
 ```
 
-[➡️ 完整詳細內容: correctness-error-handling.md](rules/correctness-error-handling.md)
 
 ---
 
@@ -142,7 +140,6 @@ def get_user(user_id: int) -> Optional[Dict[str, Any]]:
     return users.get(user_id)
 ```
 
-[➡️ 完整詳細內容: type-hints.md](rules/type-hints.md)
 
 ---
 
@@ -190,7 +187,6 @@ class Config:
     timeout: int = 30
 ```
 
-[➡️ 完整詳細內容: type-dataclasses.md](rules/type-dataclasses.md)
 
 ---
 
@@ -233,7 +229,6 @@ evens = [x for x in range(20) if x % 2 == 0]
 matrix = [[i * j for j in range(3)] for i in range(3)]
 ```
 
-[➡️ 完整詳細內容: performance-comprehensions.md](rules/performance-comprehensions.md)
 
 ---
 
@@ -267,7 +262,6 @@ with open('input.txt') as infile, open('output.txt', 'w') as outfile:
     outfile.write(infile.read().upper())
 ```
 
-[➡️ 完整詳細內容: performance-context-managers.md](rules/performance-context-managers.md)
 
 ---
 
@@ -458,7 +452,6 @@ def process_user_data(
 
 ## 參考文獻 (References)
 
-- 在 `rules/` 目錄底下的各別規則文件
 - [PEP 8 - Style Guide for Python Code](https://peps.python.org/pep-0008/)
 - [PEP 257 - Docstring Conventions](https://peps.python.org/pep-0257/)
 - [PEP 484 - Type Hints](https://peps.python.org/pep-0484/)

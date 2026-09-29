@@ -1,6 +1,6 @@
 {
   "name": "workflow-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "全端工作流基座：跨 Claude Code 與 Codex 共用的 code-review、debug、git-commit、security-review、決策、規劃與架構 skills，另附 Claude Code 團隊標準與安全 hooks。",
   "author": { "name": "PinChi Huang" },
   "license": "MIT",

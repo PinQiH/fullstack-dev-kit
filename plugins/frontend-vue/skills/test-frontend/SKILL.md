@@ -209,7 +209,7 @@ describe('[測試對象名稱]', () => {
 | 元件測試 | Composable（複雜邏輯）、Router | 元件自身邏輯、簡單 Composable |
 | E2E 測試 | 不 Mock（測試真實流程） | — |
 
-**Mock 禁止：** 不得 Mock 資料庫連線（若有 Prisma 等 ORM 的整合測試應使用測試資料庫，參考 feedback 記憶中的「不 mock 資料庫」原則）
+**Mock 禁止：** 不得 Mock 資料庫連線；Prisma 等 ORM 的整合測試改用測試資料庫，因為 mock 過的查詢無法抓出 schema、migration 與實際 SQL 行為的落差。
 
 ---
 

@@ -21,17 +21,14 @@ description: '審查本機 staged、working tree、指定檔案或遠端 Pull Re
 
 #### 針對遠端 PRs：
 1.  **唯讀取得內容**：優先使用 GitHub CLI 讀取 PR 描述、留言與 diff，不切換目前分支。
-2.  **執行檢查 (Preflight)**：若需要執行專案標準的驗證腳本，先向使用者說明時間與環境影響。
-    ```bash
-    npm run preflight
-    ```
+2.  **執行檢查 (Preflight)**：若需要執行專案既有的驗證指令（依 `package.json` scripts、Makefile 或 CI 設定判斷，例如 lint、typecheck、test），先向使用者說明時間與環境影響。
 3.  **了解上下文 (Context)**：閱讀 PR 的描述與現有留言，以理解變更目標與歷史脈絡。
 
 #### 針對本地端變更：
 1.  **識別變更 (Identify Changes)**：
     *   檢查狀態：`git status`
     *   閱讀差異：`git diff` (工作區) 或 `git diff --staged` (暫存區)。
-2.  **執行檢查 (Preflight - 選擇性)**：如果變更幅度較大，請在開始審查前詢問使用者是否需要先執行 `npm run preflight`。
+2.  **執行檢查 (Preflight - 選擇性)**：如果變更幅度較大，請在開始審查前詢問使用者是否需要先執行專案既有的驗證指令。
 
 ### 3. 深入分析 (In-Depth Analysis)
 基於以下幾個核心支柱，分析程式碼的變更：
@@ -42,7 +39,7 @@ description: '審查本機 staged、working tree、指定檔案或遠端 Pull Re
 *   **效能 (Efficiency)**：這次變更是否引入了任何明顯的效能瓶頸或資源浪費？
 *   **安全性 (Security)**：是否有任何潛在的安全漏洞 (Vulnerabilities) 或是不安全的寫法？
 *   **極端情況與錯誤處理 (Edge Cases and Error Handling)**：程式碼是否適當地處理了邊界條件以及潛在的錯誤？
-*   **可測試性 (Testability)**：新增或修改的程式碼是否有足夠的測試覆蓋率 (即使 preflight 驗證通過)？請建議可以提升覆蓋率或強健度的額外測試案例。
+*   **可測試性 (Testability)**：新增或修改的程式碼是否有足夠的測試覆蓋率 (即使既有驗證通過)？請建議可以提升覆蓋率或強健度的額外測試案例。
 
 ### 4. 提供回饋 (Provide Feedback)
 

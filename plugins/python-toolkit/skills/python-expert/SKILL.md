@@ -24,53 +24,19 @@ metadata:
 - 遵循 PEP 8 風格指南
 - 最佳化 Python 程式碼的執行效能
 
-## 開發流程 (Development Process)
+## 開發慣例 (Conventions)
 
-### 1. **設計優先 (Design First)** (極高 CRITICAL)
-在開始寫 code 之前：
-- 徹底理解問題
-- 選擇適當的資料結構
-- 規劃函式的介面與型別
-- 提早考量極端情況 (edge cases)
-
-### 2. **型別安全 (Type Safety)** (高 HIGH)
-永遠必須包含：
-- 給所有函式特徵 (signatures) 加上型別提示
-- 回傳型別標註 (Return type annotations)
-- 需要時使用 `TypeVar` 來定義泛型 (Generic types)
-- 從 `typing` 模組引入所需的型別
-
-### 3. **正確性 (Correctness)** (高 HIGH)
-確保程式碼沒有 bug：
-- 處理所有的極端情況
-- 捕捉特定的異常來進行適當的錯誤處理
-- 避免 Python 常見的陷阱 (gotchas)，例如：可變的預設參數 (mutable defaults)、作用域問題 (scope issues)
-- 針對邊界條件 (boundary conditions) 進行測試
-
-### 4. **效能 (Performance)** (中 MEDIUM)
-適當地進行最佳化：
-- 優先使用串列推導式 (list comprehensions) 而非迴圈
-- 處理巨量資料流時使用產生器 (generators)
-- 善用內建函式 (built-in functions) 與標準函式庫 (standard library)
-- 最佳化之前先進行效能分析 (Profile before optimizing)
-
-### 5. **風格與文件 (Style & Documentation)** (中 MEDIUM)
-遵循最佳實踐：
-- 符合 PEP 8 規範
-- 撰寫詳盡的文件字串 (docstrings) (使用 Google 或 NumPy 格式)
-- 有意義的變數與函式命名
-- 註解只用來解釋複雜的邏輯
+- 所有函式簽章都加型別標註（含回傳型別），使用內建泛型（`list[str]`、`X | None`），需要時才從 `typing` 引入。
+- 捕捉具體的例外型別，不使用 bare `except`，也不靜默吞掉錯誤；避免可變預設參數。
+- 最佳化前先 profile；處理大量資料流時使用 generator。
+- 遵循 PEP 8；公開函式與類別撰寫 Google 風格 docstring；註解只解釋不直觀的邏輯。
 
 ## 預期輸出格式 (Output Format)
 
-當你在撰寫 Python 程式碼時，請永遠包含下方元素：
+撰寫 Python 程式碼時，公開函式要有型別標註與 Google 風格 docstring；以下為示意，import 與泛型依實際需要取用：
 
 ```python
-from typing import List, Dict, Optional, TypeVar, Any
-
-T = TypeVar('T')
-
-def function_name(param1: str, param2: int) -> Optional[Dict[str, Any]]:
+def function_name(param1: str, param2: int) -> dict[str, str] | None:
     """簡短描述此函式的目的。
     
     如果需要的話可以提供更詳細的解釋，描述其行為、
@@ -103,11 +69,12 @@ def function_name(param1: str, param2: int) -> Optional[Dict[str, Any]]:
 **回應範例 (Response):**
 ```python
 from collections import Counter
-from typing import List, TypeVar
+from collections.abc import Hashable
+from typing import TypeVar
 
-T = TypeVar('T')
+T = TypeVar('T', bound=Hashable)
 
-def find_duplicates(items: List[T]) -> List[T]:
+def find_duplicates(items: list[T]) -> list[T]:
     """找出 list 中所有重複的項目。
     
     Args:

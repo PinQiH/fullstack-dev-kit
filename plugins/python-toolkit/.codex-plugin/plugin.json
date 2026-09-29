@@ -1,6 +1,6 @@
 {
 	"name": "python-toolkit",
-	"version": "0.2.0+codex.20260825100018",
+	"version": "0.2.1+codex.20260929140954",
 	"description": "Python 開發、型別安全、虛擬環境與程式執行規範。",
 	"author": {
 		"name": "PinChi Huang",

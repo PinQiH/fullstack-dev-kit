@@ -84,7 +84,7 @@ navigation, breadcrumb, menu, wizard, step, 導航, 步驟, 流程, 路徑, 返�
 
 ```
 偵測到以下關鍵字時觸發：
-新增頁面, 新增元件, code review, UX review, 設計審查
+新增頁面, UX review, 設計審查, 可用性評估（一般 code review 與小型元件改動不觸發）
 
 強制執行：
 1. 載入所有 resources/ 文件
@@ -105,7 +105,7 @@ navigation, breadcrumb, menu, wizard, step, 導航, 步驟, 流程, 路徑, 返�
 - [ ] **位置感知**：用戶知道自己在哪個頁面 / 步驟？
 - [ ] **可逆操作**：破壞性操作（刪除 / 送出）有確認機制？
 - [ ] **一致性**：此元件的互動行為與其他頁面的同類元件一致？
-- [ ] **無障礙基本盤**：有 aria-label / role / keyboard 支援（見 frontend_architect CASE G）？
+- [ ] **無障礙基本盤**：有 aria-label / role / keyboard 支援（見 `vue-nuxt-guidelines` CASE G）？
 
 ---
 
