@@ -23,6 +23,7 @@ description: '全端團隊的共用技術標準。開始任何程式碼修改、
 
 - 功能、修改或重構完成後，在回報完成或提交前，先自我 Code Review 異動內容並回報發現。
 - 註解遵循 `comment-conventions` skill 的 Todo-Tree 標記格式。
+- 撰寫或修改技術文件（README、SOP、規格、runbook、交接文件）前，先載入 `doc-style` skill。
 
 ## 延伸規範
 

@@ -15,6 +15,7 @@
 ## 流程
 - 完成功能／修改／重構後，**回報完成或 commit 前**，必須先自我 Code Review 剛異動的程式，並回報發現。
 - 註解遵循 Todo-Tree 標記格式（詳見 `comment-conventions` skill）。
+- 撰寫或修改技術文件（README、SOP、規格、runbook、交接文件）前，先載入 `doc-style` skill。
 
 ## 對應 skill（需要時自動載入）
 - Node 後端規範 → `nodejs-guidelines`；NestJS 專屬規範 → `nestjs-guidelines`

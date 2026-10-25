@@ -15,7 +15,7 @@ Codex：      $backend-node:test-backend
 
 | Plugin | 適用情境 | 共用 Skills | Claude Code 增強 |
 | --- | --- | --- | --- |
-| `workflow-core` | 團隊標準、Code Review、除錯、Git、安全、決策與架構 | 10 | agents、hooks |
+| `workflow-core` | 團隊標準、Code Review、除錯、Git、安全、決策與架構 | 11 | agents、hooks |
 | `backend-node` | Node.js／NestJS 分層、資料庫、API、排程與後端測試 | 6 | 無 |
 | `frontend-vue` | Vue 3、Nuxt 3、TypeScript、UX、元件文件與測試 | 4 | 無 |
 | `python-toolkit` | Python 開發、Code Review、venv 與程式執行 | 3 | agent |
@@ -47,6 +47,7 @@ Codex：      $backend-node:test-backend
 | --- | --- | --- |
 | `workflow-core` | `team-standards` | 安全、縮排、機密保護、測試與完成前自我審查 |
 | `workflow-core` | `comment-conventions` | Todo-Tree 與程式碼註解標記 |
+| `workflow-core` | `doc-style` | 繁體中文技術文件寫作風格（短句、一詞一義、一步一動作） |
 | `workflow-core` | `git-workflow` | 分支、commit message 與版本號規範 |
 | `workflow-core` | `decision-helper` | 比較方案與記錄決策依據 |
 | `workflow-core` | `project-planner` | 任務拆解、相依性、時程與里程碑 |

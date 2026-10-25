@@ -9,7 +9,7 @@
     {
       "name": "workflow-core",
       "source": "./plugins/workflow-core",
-      "version": "0.2.1",
+      "version": "0.3.0",
       "license": "MIT",
       "description": "所有人的基座：跨平台 code-review / debug / git-commit / security-review / 決策 / 規劃 / 架構 skills，另附 Claude Code 團隊標準與安全 hooks。"
     },
