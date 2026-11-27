@@ -51,6 +51,14 @@ test('02a. Node hook - 支援 node "${CLAUDE_PLUGIN_ROOT}/..." 格式', () => {
 	assert.equal(result.status, 0, result.stderr);
 });
 
+test('02b. 團隊標準副本一致 - 應通過', () => {
+	const result = runFixture(write => {
+		write('plugins/demo/skills/team-standards/SKILL.md', '---\nname: team-standards\ndescription: 標準。\n---\n\n## 安全\n\n- SQL 參數化。\n');
+		write('plugins/demo/hooks/team-standards.md', '# 常駐\n\n## 安全\n\n- SQL 參數化。\n\n## 對應 skill\n- 其他\n');
+	});
+	assert.equal(result.status, 0, result.stderr);
+});
+
 test('02. 程式範例連結 - 不應把 fenced code 當成實際資源', () => {
 	const result = runFixture(write => write(skill, entry + '\n~~~md\n[範例](missing.md)\n~~~\n'));
 	assert.equal(result.status, 0, result.stderr);
@@ -63,6 +71,10 @@ const failures = [
 	['06. 參考資料遺失 - 應指出失效連結', write => write(skill, entry + '[細節](missing.md)\n'), /missing\.md/],
 	['07. Hook 腳本遺失 - 應拒絕', write => write('plugins/demo/hooks/hooks.json', { hooks: { SessionStart: [{ hooks: [{ type: 'command', command: '${CLAUDE_PLUGIN_ROOT}/hooks/missing.sh' }] }] } }), /missing\.sh/],
 	['07a. Node hook 腳本遺失 - 應拒絕', write => write('plugins/demo/hooks/hooks.json', { hooks: { SessionStart: [{ hooks: [{ type: 'command', command: 'node "${CLAUDE_PLUGIN_ROOT}/hooks/missing.mjs"' }] }] } }), /missing\.mjs/],
+	['07b. 團隊標準副本漂移 - 應拒絕', write => {
+		write('plugins/demo/skills/team-standards/SKILL.md', '---\nname: team-standards\ndescription: 標準。\n---\n\n## 安全\n\n- SQL 參數化。\n');
+		write('plugins/demo/hooks/team-standards.md', '# 常駐\n\n## 安全\n\n- SQL 要參數化。\n');
+	}, /安全.*不一致/],
 	['08. 損壞的 JSON - 應以非零狀態結束', write => write('.claude-plugin/marketplace.json', '{'), /無法完成驗證/],
 	['09. 跨出封裝的相對路徑 - 應拒絕', write => write(skill, entry + '[外部檔案](../../../../../outside.md)\n'), /repository 內/],
 ];

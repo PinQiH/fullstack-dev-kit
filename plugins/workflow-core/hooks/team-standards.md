@@ -2,19 +2,22 @@
 
 以下為全端團隊的技術標準，每次工作皆適用。這些是**技術規範**，非個人偏好。
 
-## 安全（不可退讓）
-- SQL 一律參數化，禁止字串拼接查詢。
-- 使用者輸入輸出到 HTML 前必須跳脫，防止 XSS。
-- API Key / 密碼 / Token / 私鑰禁止 hardcode，一律走環境變數或 Secrets Manager。
-- 不主動讀取或編輯 `.env` 及機密檔。
+## 安全
+
+- SQL 一律使用參數化查詢，禁止以字串拼接組 SQL。
+- 使用者輸入輸出至 HTML 前必須跳脫，防止 XSS。
+- API Key、密碼、Token 與私鑰禁止 hardcode，應使用環境變數或 Secrets Manager。
+- 不主動讀取或編輯 `.env` 與其他機密檔。
 
 ## 排版
-- 縮排一律使用 **tab**，一層縮排 = 1 個 tab（顯示寬度 2）。
-- 建議專案根目錄放 `.editorconfig`（`indent_style = tab`）以硬性約束。
+
+- 縮排使用 tab；一層縮排為一個 tab，顯示寬度為 2。
+- 建議專案根目錄提供 `.editorconfig` 並設定 `indent_style = tab`。
 
 ## 流程
-- 完成功能／修改／重構後，**回報完成或 commit 前**，必須先自我 Code Review 剛異動的程式，並回報發現。
-- 註解遵循 Todo-Tree 標記格式（詳見 `comment-conventions` skill）。
+
+- 功能、修改或重構完成後，在回報完成或提交前，先自我 Code Review 異動內容並回報發現。
+- 註解遵循 `comment-conventions` skill 的 Todo-Tree 標記格式。
 - 撰寫或修改技術文件（README、SOP、規格、runbook、交接文件）前，先載入 `doc-style` skill。
 
 ## 驗證與回報
