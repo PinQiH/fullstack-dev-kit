@@ -140,6 +140,22 @@ focus, alt, WCAG, a11y, accessible
 - 禁止只用顏色傳遞資訊（色盲用戶無法分辨）
 ```
 
+### CASE H：涉及 Pinia Store / 共用狀態
+
+```
+偵測到以下關鍵字時觸發：
+defineStore, pinia, storeToRefs, useXxxStore, stores/, 共用狀態, 狀態管理
+
+強制執行：
+1. 載入 resources/08-Pinia.md
+
+防守規則：
+- Store 透過 Service 呼叫 API，不直接用 axios
+- Store 不呼叫 toast、不導頁；action 回傳 Result，由呼叫端決定 UI 回饋
+- 元件取 state／getter 必須用 storeToRefs，不直接解構
+- 與使用者有關的 store 提供 reset()，登出時呼叫
+```
+
 ---
 
 ## 防禦性設計黃金法則
@@ -165,6 +181,8 @@ focus, alt, WCAG, a11y, accessible
 - [ ] **測試友善**：這段邏輯是否容易進行單元測試（純函式、依賴可注入）？
 - [ ] **最小改動**：修改範圍是否超出任務要求？有沒有動到不相關的邏輯？
 - [ ] **無 any**：是否引入了 TypeScript any？若有，是否能以 unknown + narrowing 替代？
+- [ ] **Store 分工**：只有跨頁共用的狀態放進 Pinia？store 沒有直接呼叫 axios 或 toast？
+- [ ] **UX 清單**：畫面改動已對照 `ux-heuristics` 的自我檢查清單（操作回饋、文字裁切、網址）？
 
 ---
 
