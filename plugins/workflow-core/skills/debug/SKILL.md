@@ -1,6 +1,6 @@
 ---
 name: debug
-description: '系統化分析錯誤、崩潰、非預期行為與正式環境事件，找出根本原因、提出修復方式並驗證是否退化。'
+description: '系統化找出錯誤、崩潰、非預期行為與正式環境事件的根本原因，先回報原因與修法，確認後才修改並驗證。使用時機：bug、錯誤訊息、stack trace、偶發問題、上線後壞掉。'
 license: MIT
 metadata:
   author: awesome-llm-apps

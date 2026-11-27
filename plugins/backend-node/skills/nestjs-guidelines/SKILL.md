@@ -1,6 +1,6 @@
 ---
 name: nestjs-guidelines
-description: NestJS 開發與審查規範；用於 Module、Controller、DTO、TypeORM 與測試。先確認專案是否採用本 kit 的 AppError、ResponseInterceptor、TransactionService 與 AuditModule，再套用範本慣例。
+description: 'NestJS 開發與審查規範：分層與自建 Repository、Module、Controller、DTO、TypeORM、交易、稽核、Migration 與測試。使用時機：撰寫、修改或審查 NestJS 程式碼。先確認專案是否採用 AppError、ResponseInterceptor、TransactionService 與 AuditModule，未採用的部分沿用專案既有架構。不用於 Express／Sequelize 專案（改用 nodejs-guidelines）。'
 ---
 
 # NestJS 開發規範

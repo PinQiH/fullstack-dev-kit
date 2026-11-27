@@ -1,6 +1,6 @@
 ---
 name: comment-conventions
-description: '程式碼註解與 Todo-Tree 標記規範。撰寫或修改程式碼、加入註解、區塊標題、函式標記、TODO、FIXME、疑問或警告時使用。'
+description: '程式碼註解與 Todo-Tree 標記規範。使用時機：撰寫或修改程式碼、加入註解、區塊標題、函式標記、TODO、FIXME、疑問或警告。不用於技術文件（改用 doc-style）。'
 ---
 
 # 程式碼註解規範（Todo-Tree）

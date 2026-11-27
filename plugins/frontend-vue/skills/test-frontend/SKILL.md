@@ -1,6 +1,6 @@
 ---
 name: test-frontend
-description: '為 Vue 3、Nuxt 3 或 TypeScript 的 Service、Composable、元件與使用者流程撰寫、補齊或審查 Vitest 與 Playwright 測試。'
+description: '為 Vue 3、Nuxt 3 的 Service、Composable、元件與使用者流程撰寫、補齊或審查 Vitest 與 Playwright 測試，含命名與回報格式。使用時機：寫前端測試、E2E、補測試。不用於後端（改用 test-backend）。'
 ---
 
 # 前端測試撰寫與規範

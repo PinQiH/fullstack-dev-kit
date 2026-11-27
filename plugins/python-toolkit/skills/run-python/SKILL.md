@@ -1,6 +1,6 @@
 ---
 name: run-python
-description: '在隔離的虛擬環境中檢查相依、執行指定 Python 程式並回報 exit code、輸出與錯誤，不污染系統 Python。'
+description: '在隔離的虛擬環境中檢查相依、執行指定 Python 程式，回報 exit code、輸出與錯誤，不污染系統 Python。使用時機：執行或試跑某支 Python 腳本。建立專案環境改用 python-environment。'
 ---
 
 # Python 程式執行

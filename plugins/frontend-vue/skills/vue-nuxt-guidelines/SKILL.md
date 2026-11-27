@@ -1,11 +1,6 @@
 ---
 name: vue-nuxt-guidelines
-description: >
-  Vue 3 / Nuxt 3 前端架構師技能模組。
-  當任務涉及 Vue/Nuxt 元件開發、API/Service 層設計、錯誤處理架構、
-  TypeScript 型別系統、測試規範、命名規範、或 CI/CD 品質閘門時，
-  應載入此技能。此技能強制執行奧卡姆剃刀原則（最小化設計）、
-  防禦性設計，以及最小改動原則。
+description: 'Vue 3／Nuxt 3 前端開發規範：元件、Service 與 Result 錯誤處理、Composable、Pinia、TypeScript、命名、目錄結構與無障礙。使用時機：撰寫、修改或審查 Vue／Nuxt 程式碼。Nuxt 專屬規範只在專案使用 Nuxt 時套用。不用於 UX 審查（改用 ux-heuristics）與測試（改用 test-frontend）。'
 ---
 
 # Frontend Architect Skill

@@ -1,6 +1,6 @@
 ---
 name: code-review
-description: '審查本機 staged、working tree、指定檔案或遠端 Pull Request 的正確性、安全性、效能、可維護性與測試完整性。'
+description: '審查本機 staged、working tree、指定檔案或遠端 Pull Request 的正確性、安全性、效能、可維護性與測試完整性。使用時機：審查程式碼、review PR、commit 前自我審查。只要安全漏洞審查時改用 security-review；需要獨立脈絡審查大量變更時改用 code-reviewer agent。'
 ---
 
 # 程式碼審查

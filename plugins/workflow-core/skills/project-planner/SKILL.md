@@ -1,8 +1,6 @@
 ---
 name: project-planner
-description: |
-  將複雜的專案拆解為具備時間線、相依性與里程碑的具體行動任務。
-  使用時機：規劃專案 (planning projects)、建立任務拆解結構 (task breakdowns)、定義里程碑 (milestones)、估算時間線 (estimating timelines)、管理相依性 (managing dependencies)，或是當使用者提到專案規劃、產品路線圖 (roadmap) 或是任務估算時。
+description: '把專案或大型需求拆成有相依關係、時程與里程碑的任務清單，並列出風險。使用時機：規劃專案、拆解任務、估時程、定義里程碑、roadmap。需要先探索整個 codebase 再規劃時改用 project-planner agent。'
 license: MIT
 metadata:
   author: awesome-llm-apps

@@ -1,8 +1,6 @@
 ---
 name: project-planner
-description: |
-  專案規劃師 agent，將複雜專案拆解為結構化的任務清單、時間線與里程碑。當使用者需要「規劃這個專案」、「拆解任務」、「估算時間線」、「建立 WBS」、「定義里程碑」、「做專案 roadmap」、「我不知道怎麼開始」時，呼叫此 agent。
-  此 agent 會自主探索 codebase 理解現況，並輸出完整的專案計畫，包含任務拆解、相依關係、風險評估與資源分配。
+description: '自主探索 codebase 後產出完整專案計畫：任務拆解、相依關係、風險與資源分配。使用時機：規劃前需要先了解現有程式碼。已有需求清單、只要拆解任務時用 project-planner skill。'
 tools: [Read, Glob, Grep, Bash, Write]
 ---
 

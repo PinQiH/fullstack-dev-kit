@@ -1,6 +1,6 @@
 ---
 name: security-review
-description: '審查目前分支、本機差異或指定 Pull Request 新增的可利用安全漏洞，聚焦高信心且具體可修復的 findings。'
+description: '審查目前分支、本機差異或指定 Pull Request 新增的可利用安全漏洞，只回報高信心且可修復的 findings。使用時機：安全審查、security review、上線前檢查漏洞。一般程式碼品質改用 code-review。'
 ---
 
 # 安全性審查

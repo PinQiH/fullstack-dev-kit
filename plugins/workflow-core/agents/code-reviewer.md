@@ -1,8 +1,6 @@
 ---
 name: code-reviewer
-description: |
-  獨立對程式碼進行 Code Review。當使用者要求「審查程式碼」、「review PR」、「檢查這段程式」、「code review」，或剛完成某個功能需要 review 時，呼叫此 agent。
-  此 agent 會從安全性、效能、正確性、可維護性四個維度獨立審查，不受主對話影響，並產出結構化報告。
+description: '在獨立脈絡中審查程式碼，不受主對話影響，從安全性、效能、正確性、可維護性四個維度產出結構化報告。使用時機：變更量大、需要第三方視角，或使用者要求用 agent review。一般審查直接用 code-review skill。'
 tools: [Read, Glob, Grep, Bash]
 ---
 

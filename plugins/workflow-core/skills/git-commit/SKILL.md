@@ -1,6 +1,6 @@
 ---
 name: git-commit
-description: '只根據目前 staged changes 產生符合團隊格式的繁體中文 Git commit message；不自動 stage、commit 或 push。'
+description: '只根據目前 staged changes 產生符合 git-workflow 格式的繁體中文 commit message；不自動 stage、commit 或 push。使用時機：寫 commit message、想 commit 訊息。'
 ---
 
 # Git Commit 訊息產生

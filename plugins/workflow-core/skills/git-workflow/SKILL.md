@@ -1,7 +1,6 @@
 ---
 name: git-workflow
-description: >
-  Git 協作規範 (Git Workflow)。包含分支命名、Commit Message 格式與版本號規範。
+description: 'Git 協作規範：分支命名、commit message 格式與 icon 對照、版本號規則。使用時機：開分支、確認 commit 格式、決定版本號。產生 commit 訊息改用 git-commit。'
 ---
 
 # Git 協作規範 (Git Workflow)

@@ -1,6 +1,6 @@
 ---
 name: nodejs-guidelines
-description: Node.js／TypeScript 後端開發規範，用於命名、非同步、型別與分層。Express／Sequelize 範本慣例按需載入；NestJS 的 DTO、Repository 與錯誤處理改依 nestjs-guidelines。
+description: 'Node.js／TypeScript 後端通用規範：命名、非同步、型別與分層，Express／Sequelize 慣例按需載入。使用時機：撰寫或審查 Node.js 後端程式碼。NestJS 專案的 DTO、Repository 與錯誤處理以 nestjs-guidelines 為準。'
 ---
 
 # Node.js 後端開發規範

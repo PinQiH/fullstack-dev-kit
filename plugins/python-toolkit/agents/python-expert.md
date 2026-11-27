@@ -1,8 +1,6 @@
 ---
 name: python-expert
-description: |
-  獨立審查或撰寫 Python 程式碼的專家 agent。當使用者需要「審查 Python 程式碼」、「優化 Python」、「Python 最佳實踐」、「找 Python bug」，或撰寫高品質 Python 程式碼時，呼叫此 agent。
-  此 agent 依照正確性、型別安全、效能、風格四個維度進行獨立分析。
+description: '在獨立脈絡中審查或撰寫 Python 程式碼，從正確性、型別安全、效能、風格四個維度分析。使用時機：審查整個 Python 專案或大量檔案。一般撰寫與小範圍審查用 python-expert skill。'
 tools: [Read, Glob, Grep, Bash]
 ---
 

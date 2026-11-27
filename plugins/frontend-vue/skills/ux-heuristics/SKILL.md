@@ -1,10 +1,6 @@
 ---
 name: ux-heuristics
-description: >
-  UX 可用性啟發式評估技能模組。
-  當任務涉及 UI 元件設計、表單設計、錯誤訊息撰寫、導航/資訊架構、
-  或 Loading/Error/Empty 三態設計時，應載入此技能。
-  強制以 Nielsen 10 大啟發式原則與 Vue 元件實作規範雙軌審查。
+description: 'UI 可用性審查與自查：表單、錯誤訊息、Loading／Error／Empty 三態、導航、操作回饋與畫面細節，以 Nielsen 10 大原則為基準。使用時機：新增或修改頁面、元件、表單、彈窗，或要求 UX review。不用於程式架構與命名（改用 vue-nuxt-guidelines）。'
 ---
 
 # UX Heuristics Skill

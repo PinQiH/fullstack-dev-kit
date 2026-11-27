@@ -1,9 +1,6 @@
 ---
 name: decision-helper
-description: |
-  結構化的決策框架，用於評估多個選項並做出明智的選擇。
-  使用時機：做決策 (making decisions)、評估選項 (evaluating options)、權衡利弊 (weighing trade-offs)，
-  或是當使用者需要在多個替代方案中做選擇、分析優缺點、或是需要結構化決策協助時。
+description: '結構化比較多個選項並給出建議：列出評估條件、權重、優缺點與取捨。使用時機：做決策、比較方案、權衡利弊、不知道選哪個。技術架構與選型改用 senior-architect。'
 license: MIT
 metadata:
   author: awesome-llm-apps

@@ -1,6 +1,6 @@
 ---
 name: test-backend
-description: '為 Node.js Controller、Service 或 Repository 撰寫、補齊或審查測試，套用單元測試、整合測試、Test Double、生命週期與命名規範。'
+description: '為 Node.js 或 NestJS 的 Controller、Service、Repository 撰寫、補齊或審查測試：單元與整合測試、Test Double、生命週期、命名與回報格式。使用時機：寫後端測試、補測試、審查測試。不用於前端（改用 test-frontend）。'
 ---
 
 # 後端測試撰寫與規範

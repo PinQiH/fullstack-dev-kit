@@ -1,8 +1,6 @@
 ---
 name: python-expert
-description: |
-  資深 Python 開發專家，協助撰寫乾淨、高效且有良好文件的程式碼。
-  使用時機：撰寫 Python 程式碼、最佳化 Python 腳本、進行 Python 最佳實踐的 Code Review、排解問題、加入型別提示 (type hints)，或是當使用者提到 Python、PEP 8、或需要 Python 資料結構與演算法的幫助時。
+description: 'Python 撰寫與審查規範：PEP 8、型別提示、錯誤處理、效能與資料結構。使用時機：撰寫、最佳化或審查 Python 程式碼。需要獨立脈絡審查整個專案時改用 python-expert agent。'
 license: MIT
 metadata:
   author: awesome-llm-apps

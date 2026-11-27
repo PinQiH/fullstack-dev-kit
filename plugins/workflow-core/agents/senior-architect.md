@@ -1,8 +1,6 @@
 ---
 name: senior-architect
-description: |
-  系統架構設計與分析的資深架構師 agent。當使用者需要「設計系統架構」、「評估微服務 vs 單體架構」、「產生架構圖」、「分析相依性」、「選擇資料庫」、「規劃系統擴展性」、「做技術決策」、「審查系統設計」、「建立 ADR」時，呼叫此 agent。
-  此 agent 可執行分析腳本、自主探索 codebase，並產出架構評估報告、架構圖與技術決策建議。
+description: '自主探索 codebase 並執行分析腳本，產出架構評估報告、架構圖與技術決策建議。使用時機：分析整個既有專案的架構。單一架構問題或技術選型直接用 senior-architect skill。'
 tools: [Read, Glob, Grep, Bash, Write]
 ---
 
