@@ -43,6 +43,14 @@ test('01. 有效封裝 - 支援中文、折行 description、含空白路徑及�
 	assert.match(result.stdout, /1 plugins、1 skills/);
 });
 
+test('02a. Node hook - 支援 node "${CLAUDE_PLUGIN_ROOT}/..." 格式', () => {
+	const result = runFixture(write => {
+		write('plugins/demo/hooks/hooks.json', { hooks: { PreToolUse: [{ matcher: 'Bash', hooks: [{ type: 'command', command: 'node "${CLAUDE_PLUGIN_ROOT}/hooks/dispatch.mjs"' }] }] } });
+		write('plugins/demo/hooks/dispatch.mjs', 'process.exitCode = 0;\n');
+	});
+	assert.equal(result.status, 0, result.stderr);
+});
+
 test('02. 程式範例連結 - 不應把 fenced code 當成實際資源', () => {
 	const result = runFixture(write => write(skill, entry + '\n~~~md\n[範例](missing.md)\n~~~\n'));
 	assert.equal(result.status, 0, result.stderr);
@@ -54,6 +62,7 @@ const failures = [
 	['05. 空白 description - 不得把下一個欄位當成內容', write => write(skill, '---\ndescription:\nname: example\n---\n'), /description/],
 	['06. 參考資料遺失 - 應指出失效連結', write => write(skill, entry + '[細節](missing.md)\n'), /missing\.md/],
 	['07. Hook 腳本遺失 - 應拒絕', write => write('plugins/demo/hooks/hooks.json', { hooks: { SessionStart: [{ hooks: [{ type: 'command', command: '${CLAUDE_PLUGIN_ROOT}/hooks/missing.sh' }] }] } }), /missing\.sh/],
+	['07a. Node hook 腳本遺失 - 應拒絕', write => write('plugins/demo/hooks/hooks.json', { hooks: { SessionStart: [{ hooks: [{ type: 'command', command: 'node "${CLAUDE_PLUGIN_ROOT}/hooks/missing.mjs"' }] }] } }), /missing\.mjs/],
 	['08. 損壞的 JSON - 應以非零狀態結束', write => write('.claude-plugin/marketplace.json', '{'), /無法完成驗證/],
 	['09. 跨出封裝的相對路徑 - 應拒絕', write => write(skill, entry + '[外部檔案](../../../../../outside.md)\n'), /repository 內/],
 ];

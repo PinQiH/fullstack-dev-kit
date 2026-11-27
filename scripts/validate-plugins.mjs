@@ -77,7 +77,8 @@ try {
 				for (const group of groups) {
 					for (const hook of group.hooks) {
 						if (hook.type !== 'command') continue;
-						const match = hook.command.match(/^\$\{CLAUDE_PLUGIN_ROOT\}\/([^\s]+)$/);
+						// @ 支援直接執行腳本，或以 node 執行（Windows 不需 Git Bash）。
+						const match = hook.command.match(/^(?:node\s+)?"?\$\{CLAUDE_PLUGIN_ROOT\}\/([^\s"]+)"?$/);
 						check(Boolean(match), `${hooksPath}：不支援的 hook command 格式`);
 						if (match) checkPath(resolve(root, base), match[1], hooksPath);
 					}
