@@ -182,7 +182,8 @@ git diff --check
 ```
 
 驗證器檢查兩平台的 plugin 清單、來源、基礎版本、skill 名稱與 description、
-入口的相對 Markdown 檔案連結，以及 hook 腳本是否存在；也列出各入口的行數與 UTF-8 大小。
+入口的相對 Markdown 檔案連結、hook 腳本是否存在，以及團隊標準三份副本（skill、常駐 hook、AGENTS 範本）
+的共用段落是否一致；也列出各入口的行數與 UTF-8 大小。
 它只檢查本 kit 的封裝契約，不取代完整 YAML／平台 schema 驗證、網路連結檢查或實際載入測試。
 
 大型 skill 入口只保留適用範圍、核心限制與任務索引；詳細規範放在 `references/`，按任務讀取。
