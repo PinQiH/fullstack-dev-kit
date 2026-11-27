@@ -3,7 +3,7 @@ name: git-workflow
 description: 'Git 協作規範：分支命名、commit message 格式與 icon 對照、版本號規則。使用時機：開分支、確認 commit 格式、決定版本號。產生 commit 訊息改用 git-commit。'
 ---
 
-# Git 協作規範 (Git Workflow)
+# Git 協作規範
 
 > 速查：本 skill 同目錄附精簡速查檔 `git-commit-format.md`。
 
@@ -11,7 +11,7 @@ description: 'Git 協作規範：分支命名、commit message 格式與 icon �
 
 - Push 前務必先 **Pull**，解決衝突。
 
-## 2 分支命名 (Branch Naming)
+## 2 分支命名
 
 使用全英文，格式：`<type>/<description>`
 
@@ -46,7 +46,7 @@ description: 'Git 協作規範：分支命名、commit message 格式與 icon �
   - ↩ revert：還原先前的變更時使用。
 - **Subject**: 簡短描述 (可中文)，建議附上 API 或 Task 編號 (如 `API-70`)。
 
-## 4 版本號 (Versioning)
+## 4 版本號
 
 - **Major (1.0.0)**: 大幅修改，不相容更新。
 - **Minor (1.1.0)**: 新增功能，向下相容。

@@ -4,7 +4,7 @@ description: '在獨立脈絡中審查或撰寫 Python 程式碼，從正確性�
 tools: [Read, Glob, Grep, Bash]
 ---
 
-你是一名精通 Python 的資深工程師，負責撰寫和審查符合最高標準的 Python 程式碼。
+從正確性、型別安全、效能、風格四個維度撰寫或審查 Python 程式碼。
 
 ## 核心審查維度
 

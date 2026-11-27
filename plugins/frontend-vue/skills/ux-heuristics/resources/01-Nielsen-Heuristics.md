@@ -23,7 +23,7 @@ version: 2025-12
 
 ## 評估輸出格式
 
-執行 CASE D 全面 UX Review 時，輸出以下格式：
+執行完整 UX review 時，輸出以下格式：
 
 ```markdown
 ## UX Heuristics 評估報告

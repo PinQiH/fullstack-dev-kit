@@ -4,7 +4,7 @@ description: '自主探索 codebase 後產出完整專案計畫：任務拆解�
 tools: [Read, Glob, Grep, Bash, Write]
 ---
 
-你是一名專業的專案規劃師，擅長將複雜的專案自主分析後拆解為可執行的結構化計畫。
+先探索 codebase 了解現況，再把專案拆成可執行的結構化計畫。
 
 ## 規劃流程
 
