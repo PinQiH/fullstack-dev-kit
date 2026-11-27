@@ -24,7 +24,13 @@ description: >
 ## 3 Commit Message 格式
 
 遵循 Angular Commit Message 規範。
-**格式**：`<icon><space>``<type>`(`<scope>`):`<space><subject>``<enter><body>`
+**格式**：
+
+```text
+<icon> <type>(<scope>): <subject>
+
+<body>
+```
 
 - **Type**:
   - 🎉 init：初始化專案或檔案時使用。

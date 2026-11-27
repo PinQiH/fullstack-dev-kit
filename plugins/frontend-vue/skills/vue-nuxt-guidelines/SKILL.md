@@ -51,7 +51,7 @@ makeApiCall, fetch, axios, service, result, AppError, composable, useAsyncState
 - makeApiCall 若業務錯誤需自行處理，必須設定 skipGlobalErrorHandler: true
 ```
 
-CASE B：涉及 Vue 元件 / Nuxt 頁面開發
+### CASE B：涉及 Vue 元件 / Nuxt 頁面開發
 
 ```
 偵測到：.vue, defineProps, script setup, useAsyncData, useState, <ClientOnly>
@@ -79,7 +79,7 @@ interface, type, enum, as const, DTO, Domain, any, unknown
 - DTO 與 Domain Model 必須嚴格分離，轉換邏輯集中在 Mapper
 ```
 
-CASE D：涉及測試撰寫
+### CASE D：涉及測試撰寫
 
 ```
 偵測到：test, spec, vitest, describe, it, expect, vi.mock, Playwright
@@ -112,7 +112,7 @@ CASE D：涉及測試撰寫
 .env, token, secret, API_KEY, auth, 環境變數, 敏感資訊
 
 強制執行：
-1. 通用安全規範見常駐 `security-absolutes`（SQL 參數化／XSS／機密不落地）
+1. 通用安全規範見 `team-standards`（SQL 參數化、XSS、機密不落地）
 
 防守規則（Nuxt 專屬補充）：
 - 任何敏感資訊絕對禁止 hardcode 在程式碼中
