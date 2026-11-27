@@ -15,8 +15,15 @@ it('02. 更新失敗 - 查無資料應拋出 NotFoundError 且不呼叫 save', .
 
 ### 13.2 只替換邊界依賴
 
-Service 測試替換 Repository，不連真實資料庫。
+Service 測試替換自建 Repository 的語意方法，不連真實資料庫：
+
+```ts
+const todoRepository = { getTodosByOwner: jest.fn(), addTodo: jest.fn() };
+```
+
 驗證的是業務判斷，不是資料有沒有真的寫進去——後者屬整合測試。
+Repository 的查詢條件、排序與 QueryBuilder 用整合測試連測試資料庫驗證；
+mock QueryBuilder 鏈式呼叫只證明「有呼叫」，證明不了查詢正確。
 
 ### 13.3 測試要鎖住「錯了也不會有徵兆」的東西
 
@@ -134,7 +141,10 @@ export type PermissionCode = (typeof PERMISSION)[keyof typeof PERMISSION];
 
 | 反模式                                 | 為什麼不做                                              |
 | -------------------------------------- | ------------------------------------------------------- |
-| 自建 Repository 轉發層                 | TypeORM Repository 已是 Repository 模式                 |
+| Service 直接注入 TypeORM Repository 或寫 QueryBuilder | 查詢散落各處，無法集中審查，Service 測試要 mock 鏈式呼叫 |
+| Repository 提供 `find(options)` 等泛用轉發 | 等於把 TypeORM 原封不動交給 Service，集中的意義消失 |
+| `dataSource.query()` 原生 SQL          | 繞過 Entity 對應，改欄位時不會報錯                      |
+| `synchronize: true`                    | Entity 少一個欄位就刪掉資料表的那一欄                   |
 | DTO 用 interface                       | 執行期不存在，裝飾器無處可掛                            |
 | Service 拋 NestJS 內建例外             | 業務層不該認得 HTTP                                     |
 | `configService.get<T>('a.b')`        | 靠斷言，改名不會被抓到                                  |
@@ -145,5 +155,5 @@ export type PermissionCode = (typeof PERMISSION)[keyof typeof PERMISSION];
 | 為幾十行程式碼引入套件                 | 已自寫`SnakeNamingStrategy`、Valkey throttler storage |
 | `repository.delete(criteria)` 直接用 | 繞過稽核與稽查員，無聲漏記                              |
 | `Promise.all` 平行跑 bcrypt          | 一口氣佔滿只有 4 條的 libuv 執行緒池                    |
-| 交易中用`this.xxxRepository`         | 走連線池另一條連線，不屬於該交易                        |
+| Repository 交易中用`this.ormRepository` | 走連線池另一條連線，不屬於該交易                        |
 | `eventEmitter.emit()` 發稽核事件     | 不等待，稽核失敗時業務照樣回成功                        |

@@ -20,7 +20,7 @@ description: NestJS 開發與審查規範；用於 Module、Controller、DTO、T
 | 項目 | 本 kit NestJS 範本 |
 | --- | --- |
 | DTO | 使用 class 與驗證裝飾器，保留執行期 import |
-| 資料存取 | 直接注入 TypeORM Repository，不新增只轉發的 Repository 層 |
+| 資料存取 | 查詢集中在自建 `*.repository.ts`，方法要有業務語意；Service 不直接注入 TypeORM Repository |
 | 業務錯誤 | Service 拋 AppError 子類，由 Filter 翻譯資料庫與 HTTP 錯誤 |
 | HTTP 狀態 | 依 HTTP 語意與既有統一回應契約，不套用「全部回 200」 |
 | 命名 | 資源主鍵與方法帶完整資源名；保留 NestJS 專案既有檔名慣例 |
@@ -34,7 +34,7 @@ description: NestJS 開發與審查規範；用於 Module、Controller、DTO、T
 | --- | --- |
 | 分層、Controller／Service 邊界、主鍵與方法命名 | [architecture.md](references/architecture.md) |
 | DTO、ValidationPipe、路由、Swagger、錯誤與回應格式 | [http-validation.md](references/http-validation.md) |
-| Entity、查詢、交易、稽核事件、Migration | [persistence.md](references/persistence.md) |
+| Repository 層、Entity、查詢、交易、稽核事件、Migration | [persistence.md](references/persistence.md) |
 | 設定注入、Module、Guard、middleware、啟動與 E2E 共用設定 | [runtime.md](references/runtime.md) |
 | 測試、TypeScript metadata、註解與反模式檢查 | [quality.md](references/quality.md) |
 
@@ -43,7 +43,8 @@ description: NestJS 開發與審查規範；用於 Module、Controller、DTO、T
 - Controller 處理 HTTP；Service 不依賴 Express，不自行包裝統一回應。
 - DTO 的 `@IsOptional()` 會略過 `null` 與 `undefined`；依 API 契約決定是否允許。
 - 純型別使用 `import type`；驗證與 DI 需要的 class 必須保留執行期值。
-- 在範本交易內，讀寫都使用 `resolveRepository()`，不得混用連線池 Repository。
+- 查詢只寫在 `*.repository.ts`；不寫 `dataSource.query()` 等原生 SQL（Migration 除外），`synchronize` 一律關閉。
+- 在範本交易內，Repository 的讀寫都使用 `resolveRepository()`，不得混用連線池 Repository。
 - 稽核事件要等待完成並傳播錯誤；不得記錄密碼、token 或 session id 原值。
 - 未預期錯誤不回傳原始內部訊息；遵循專案的敏感資料遮罩規則。
 

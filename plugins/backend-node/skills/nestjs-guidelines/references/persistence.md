@@ -2,6 +2,108 @@
 
 適用於已採用本 kit NestJS 範本基礎設施的專案；先閱讀 [入口與適用範圍](../SKILL.md)。
 
+## 四、Repository 層
+
+### 4.1 查詢只能寫在 `*.repository.ts`
+
+```
+Service ── 呼叫 todoRepository.getTodosByOwner()，不知道查詢怎麼寫
+TodoRepository（todo.repository.ts）── 注入 TypeORM Repository，寫 find／QueryBuilder
+```
+
+為什麼不讓 Service 直接用 TypeORM 的 `Repository<Todo>`：
+
+- **查詢集中**：查效能問題、改查詢、code review 只看一個地方。
+  散在各 Service 裡，同一個查詢很容易被複製成好幾份。
+- **Service 好測**：mock 幾個語意清楚的方法，比 mock `Repository<Entity>`
+  或 QueryBuilder 的鏈式呼叫簡單很多。
+- **規則明確**：「查詢只能出現在 repository」可以用 lint 檢查（見 4.5），
+  AI 與新成員都不容易寫錯位置。
+
+### 4.2 方法要有業務語意，不做泛用轉發
+
+```ts
+@Injectable()
+export class TodoRepository {
+	constructor(
+		@InjectRepository(Todo)
+		private readonly ormRepository: Repository<Todo>,
+		private readonly transactionService: TransactionService,
+	) {}
+
+	// - 交易內外都用同一個入口，見 11.2
+	private get repository(): Repository<Todo> {
+		return this.transactionService.resolveRepository(this.ormRepository);
+	}
+
+	async getTodosByOwner({ ownerId }: { ownerId: string }): Promise<Todo[]> {
+		return this.repository.find({ where: { ownerId }, order: { createdAt: 'DESC' } });
+	}
+
+	async getOverdueTodoCount({ ownerId, now }: { ownerId: string; now: Date }): Promise<number> {
+		return this.repository.createQueryBuilder('todo')
+			.where('todo.ownerId = :ownerId', { ownerId })
+			.andWhere('todo.dueAt < :now', { now })
+			.andWhere('todo.isCompleted = false')
+			.getCount();
+	}
+}
+```
+
+| ✅ 要                                     | ❌ 不要                                                 |
+| ----------------------------------------- | ------------------------------------------------------- |
+| `getTodosByOwner({ ownerId })`          | `find(options: FindManyOptions<Todo>)`：等於把 TypeORM 原封不動交給 Service |
+| 回傳 Entity 或明確的型別                  | 回傳 `SelectQueryBuilder` 讓 Service 繼續串條件       |
+| 一個查詢一個方法，名稱說明用途與風險      | `generalRepo` 式的萬用 CRUD                             |
+
+Repository 不做業務判斷：查不到回 `null`，由 Service 決定要不要拋 `NotFoundError`。
+資料庫錯誤照常往上拋，由 Filter 統一翻譯。
+
+### 4.3 不寫原生 SQL
+
+不使用 `dataSource.query()`、`manager.query()`、`queryRunner.query()`。
+CTE、聚合、子查詢都拆成 QueryBuilder；QueryBuilder 表達不了的彙整改在 Service 計算。
+原生 SQL 會繞過 Entity 的欄位對應與命名策略，改欄位時不會有任何編譯錯誤。
+
+唯一例外是 Migration（見十四），且一律參數化。
+
+### 4.4 `synchronize` 一律關閉
+
+`TypeOrmModule.forRoot()` 的 `synchronize` 與 `dropSchema` 一律 `false`，
+開發環境也一樣。schema 只由 Migration 改變；
+開著 `synchronize` 時，Entity 少寫一個欄位就會直接刪掉資料表裡的那一欄。
+
+### 4.5 用 ESLint 強制
+
+```js
+// eslint.config.js
+const RAW_SQL = [
+	{ selector: "CallExpression[callee.property.name='query'][callee.object.name=/^(dataSource|manager|entityManager|queryRunner)$/]", message: '不寫原生 SQL，改用 QueryBuilder' },
+	{ selector: "CallExpression[callee.property.name='query'][callee.object.property.name=/^(dataSource|manager|entityManager|queryRunner)$/]", message: '不寫原生 SQL，改用 QueryBuilder' },
+];
+export default [
+	{
+		files: ['src/**/*.ts'],
+		ignores: ['src/**/*.repository.ts', 'src/**/migrations/**', 'src/**/*.spec.ts', 'src/common/database/**'],
+		rules: {
+			'no-restricted-syntax': ['error',
+				{ selector: "Decorator[expression.callee.name='InjectRepository']", message: '只有 *.repository.ts 可以注入 TypeORM Repository' },
+				{ selector: "CallExpression[callee.property.name='createQueryBuilder']", message: '查詢只能寫在 *.repository.ts' },
+				...RAW_SQL,
+			],
+		},
+	},
+	{
+		files: ['src/**/*.repository.ts'],
+		rules: { 'no-restricted-syntax': ['error', ...RAW_SQL] },
+	},
+];
+```
+
+`src/common/database/**` 是 `TransactionService` 等基礎設施的位置，依專案實際路徑調整。
+
+---
+
 ## 五、Entity 與資料庫
 
 ### 5.1 欄位名交給 `SnakeNamingStrategy`，資料表名手寫
@@ -59,14 +161,14 @@ password: string;
 
 ### 11.2 用 `TransactionService`，不要把 manager 當參數傳
 
-```ts
-private get repository(): Repository<Todo> {
-	return this.transactionService.resolveRepository(this.todoRepository);
-}
+交易邊界由 Service 決定，Repository 內部用 `resolveRepository()` 自動加入外層交易
+（getter 寫法見 4.2）：
 
+```ts
+// todo.service.ts
 async addTodo(...) {
 	return this.transactionService.run(async () => {
-		const saved = await this.repository.save(...);
+		const saved = await this.todoRepository.addTodo(...);
 		await this.auditPublisher.publish({ ... });
 		return saved;
 	});
@@ -76,7 +178,7 @@ async addTodo(...) {
 manager 一路傳參數是無聲失敗：忘記傳的地方會安靜地走另一條連線，
 程式照跑、測試照過，直到某次回滾才發現有資料沒退回去。
 
-### 11.3 讀取也必須走 `resolveRepository()`
+### 11.3 Repository 的讀取也必須走 `resolveRepository()`
 
 **踩過**：`addUser` 最後呼叫 `getUserById` 重查剛建立的帳號，
 用的是連線池另一條連線，交易未 commit 因此查無資料 → 整筆註冊回滾。
