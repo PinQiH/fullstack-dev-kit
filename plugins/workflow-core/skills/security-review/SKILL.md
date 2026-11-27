@@ -22,6 +22,11 @@ description: '審查目前分支、本機差異或指定 Pull Request 新增的�
 - 可利用的 reflected、stored 或 DOM XSS，以及不安全 HTML API。
 - 機密、密碼或個人資料洩漏。
 - 新增的外部輸入到敏感操作之間，是否缺少必要驗證或編碼。
+- 從程式碼就能確認的濫用風險（以 Medium 回報）：
+  - 登入、OTP、重設密碼、註冊等端點沒有節流或失敗次數限制。
+  - 呼叫 LLM、簡訊、Email 或其他按量計費 API 的端點沒有節流，可能被濫用產生費用。
+  - 分頁大小（`limit`、`pageSize`）沒有上限，或上傳檔案沒有大小限制。
+  - 使用者輸入直接用來組正規式（ReDoS）。
 
 ## 分析方式
 
@@ -33,11 +38,12 @@ description: '審查目前分支、本機差異或指定 Pull Request 新增的�
 
 ## 不回報的項目
 
-- DoS、rate limiting、資源耗盡、記憶體或 CPU 消耗。
+- 一般性的 DoS、資源耗盡、記憶體或 CPU 消耗；上方「濫用風險」列出的情境除外。
+- 專案已在 gateway、nginx 或全域 middleware 統一節流時，不重複回報個別端點缺少節流。
 - 只有最佳實務缺口，卻沒有具體利用路徑的 hardening 建議。
 - 單純過時的第三方套件、文件檔、純測試檔或 log spoofing。
 - 只控制 URL path、無法控制 host 或 protocol 的 SSRF 猜測。
-- Regex injection、Regex DoS、純理論 race condition。
+- 使用者無法控制內容的 regex、純理論 race condition。
 - 前端缺少授權檢查；授權應由後端執行。若後端也缺少檢查則應回報。
 - React、Angular 或 Vue 的一般文字插值；只有使用不安全 HTML API 時才視為 XSS 候選。
 - GitHub Actions 或 shell script 中沒有可信外部輸入路徑的 command injection 猜測。
