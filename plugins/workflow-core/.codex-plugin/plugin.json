@@ -1,6 +1,6 @@
 {
 	"name": "workflow-core",
-	"version": "0.3.0+codex.20261025220000",
+	"version": "0.4.0+codex.20261127032734",
 	"description": "全端開發的共用工作流、程式碼審查、安全審查、除錯、Git 與架構規範。",
 	"author": {
 		"name": "PinChi Huang",
