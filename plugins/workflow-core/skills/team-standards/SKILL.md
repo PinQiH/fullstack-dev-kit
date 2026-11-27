@@ -25,6 +25,12 @@ description: '全端團隊的共用技術標準。開始任何程式碼修改、
 - 註解遵循 `comment-conventions` skill 的 Todo-Tree 標記格式。
 - 撰寫或修改技術文件（README、SOP、規格、runbook、交接文件）前，先載入 `doc-style` skill。
 
+## 驗證與回報
+
+- 每次新增或串接 API，列出需要的測試，逐項標示「已補／建議補／不需要」並附理由。
+- 能自己驗證的先驗證（測試、curl、容器內指令），再回報。
+- 建置、單元測試、E2E、實機驗證分開回報；沒做的明確標示「未執行」與原因，不合併成一句「已測試」。
+
 ## 延伸規範
 
 - Node.js、資料庫與後端測試：使用 `backend-node` plugin 中的對應 skill。

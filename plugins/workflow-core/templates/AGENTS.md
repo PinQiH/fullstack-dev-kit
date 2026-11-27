@@ -19,6 +19,12 @@
 - 功能、修改或重構完成後，在回報完成或提交前，先自我 Code Review 異動內容並回報發現。
 - 註解使用 Todo-Tree 標記：`// >`、`// -`、`// @`、`// TODO:`、`// FIXME:`、`// ??`、`// !!`。
 
+## 驗證與回報
+
+- 每次新增或串接 API，列出需要的測試，逐項標示「已補／建議補／不需要」並附理由。
+- 能自己驗證的先驗證（測試、curl、容器內指令），再回報。
+- 建置、單元測試、E2E、實機驗證分開回報；沒做的明確標示「未執行」與原因，不合併成一句「已測試」。
+
 ## 已安裝技能
 
 - 全端工作流：`team-standards`、`comment-conventions`、`git-workflow`、`git-commit`、`code-review`、`security-review`、`debug`、`decision-helper`、`project-planner`、`senior-architect`。
