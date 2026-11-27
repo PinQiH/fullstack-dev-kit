@@ -9,21 +9,21 @@
     {
       "name": "workflow-core",
       "source": "./plugins/workflow-core",
-      "version": "0.3.0",
+      "version": "0.4.0",
       "license": "MIT",
       "description": "所有人的基座：跨平台 code-review / debug / git-commit / security-review / 決策 / 規劃 / 架構 skills，另附 Claude Code 團隊標準與安全 hooks。"
     },
     {
       "name": "backend-node",
       "source": "./plugins/backend-node",
-      "version": "0.4.0",
+      "version": "0.5.0",
       "license": "MIT",
       "description": "Node.js / NestJS 後端：分層、DB、錯誤處理、文件與測試規範，提供 api-doc、cronjob-doc、test-backend 跨平台 skills。"
     },
     {
       "name": "frontend-vue",
       "source": "./plugins/frontend-vue",
-      "version": "0.3.1",
+      "version": "0.4.0",
       "license": "MIT",
       "description": "Vue 3 / Nuxt 3：架構、UX、元件文件與測試規範，提供 component-doc、test-frontend 跨平台 skills。"
     },

@@ -31,6 +31,16 @@ function field(frontmatter, key) {
 	return value.replace(/^(['"])(.*)\1$/, '$2').trim();
 }
 
+const STANDARD_SECTIONS = ['安全', '排版', '流程', '驗證與回報'];
+// - 取出 `## 名稱` 到下一個 `## ` 之間的內容，去掉前後空白。
+function section(text, name) {
+	const lines = text.split('\n');
+	const start = lines.findIndex((line) => line.replace(/（.*）$/, '').trim() === `## ${name}`);
+	if (start === -1) return null;
+	const end = lines.findIndex((line, index) => index > start && line.startsWith('## '));
+	return lines.slice(start + 1, end === -1 ? undefined : end).join('\n').trim();
+}
+
 try {
 	const claude = json('.claude-plugin/marketplace.json');
 	const codex = json('.agents/plugins/marketplace.json');
@@ -71,13 +81,28 @@ try {
 			skillCount++;
 			console.log(`${name}/${skill}：${content.trimEnd().split('\n').length} 行，${Buffer.byteLength(content, 'utf8')} bytes`);
 		}
+		// @ 團隊標準有 skill、常駐 hook、AGENTS 範本三份，共用段落必須與 skill 一字不差。
+		const standardsPath = `${base}/skills/team-standards/SKILL.md`;
+		if (existsSync(resolve(root, standardsPath))) {
+			const source = read(standardsPath);
+			for (const copy of [`${base}/hooks/team-standards.md`, `${base}/templates/AGENTS.md`]) {
+				if (!existsSync(resolve(root, copy))) continue;
+				const text = read(copy);
+				for (const name of STANDARD_SECTIONS) {
+					const expected = section(source, name);
+					if (expected === null) continue;
+					check(section(text, name) === expected, `${copy}：「${name}」段落與 team-standards skill 不一致`);
+				}
+			}
+		}
 		const hooksPath = `${base}/hooks/hooks.json`;
 		if (existsSync(resolve(root, hooksPath))) {
 			for (const groups of Object.values(json(hooksPath).hooks)) {
 				for (const group of groups) {
 					for (const hook of group.hooks) {
 						if (hook.type !== 'command') continue;
-						const match = hook.command.match(/^\$\{CLAUDE_PLUGIN_ROOT\}\/([^\s]+)$/);
+						// @ 支援直接執行腳本，或以 node 執行（Windows 不需 Git Bash）。
+						const match = hook.command.match(/^(?:node\s+)?"?\$\{CLAUDE_PLUGIN_ROOT\}\/([^\s"]+)"?$/);
 						check(Boolean(match), `${hooksPath}：不支援的 hook command 格式`);
 						if (match) checkPath(resolve(root, base), match[1], hooksPath);
 					}

@@ -131,9 +131,22 @@ Codex 的 `~/.codex/prompts/*.md` 仍能建立 `/prompts:<name>`，但[官方已
 
 ### Hooks
 
-`workflow-core` 提供 SessionStart 團隊標準、安全操作防護、機密檢查、commit 前自我審查與可用 linter 檢查。Hook 是 Bash 腳本；Windows 需要 Git Bash。
+`workflow-core` 的 hooks 由單一入口 `hooks/dispatch.mjs` 依事件與工具類型分派，需要 Node.js 18 以上，Windows 不需要 Git Bash。
 
-需要 Python 的 hooks 會依序尋找 `python3`、`python`、`py`；找不到可用直譯器時採 fail-open，不阻斷工具操作。`lint-on-save` 只使用專案或系統既有的 ESLint、Ruff、Flake8，不會自行安裝套件。
+| 事件 | 工具 | 檢查 |
+| --- | --- | --- |
+| SessionStart | — | 注入團隊技術標準 |
+| PreToolUse | Bash、PowerShell | 讀寫機密檔、force push、刪除遠端分支、`reset --hard`、危險的遞迴刪除、資料庫用戶端的 DROP／TRUNCATE、commit 前自我審查 |
+| PreToolUse | Read、Glob、Grep | 讀取或搜尋 `.env`、私鑰、憑證 |
+| PreToolUse | Write、Edit、MultiEdit、NotebookEdit | 寫入機密檔、寫入疑似 API Key、JWT、AWS Key、私鑰、hardcode 密碼 |
+| PostToolUse | Write、Edit、MultiEdit | 用專案既有的 ESLint、Ruff、Flake8 檢查 |
+
+- 阻擋時回傳官方 JSON（`permissionDecision: "deny"`），理由會傳給 Claude。
+- 指令會先拆成段落再比對，`cd x && git commit`、`git -C x commit` 都會觸發審查；引號內的搜尋字串與 commit 訊息不會誤判。
+- `.env.example`、`.env.sample`、`.env.template` 可以讀寫，方便列出鍵名。
+- commit 審查標記存放在 `.git/claude-review-done`，不會被 commit。
+- ESLint 從被修改檔案的目錄往上找最近的設定檔與 `node_modules/eslint`，支援 monorepo 與 ESLint 9 flat config；Python 的 venv 支援 `bin/` 與 Windows 的 `Scripts/`。
+- 解析失敗或找不到 linter 時一律放行（fail-open），不會自行安裝套件。
 
 ## 專案結構
 
@@ -164,12 +177,13 @@ plugins/<plugin-name>/
 
 ```powershell
 node scripts/validate-plugins.mjs
-node --test scripts/validate-plugins.test.mjs
+node --test scripts/validate-plugins.test.mjs scripts/hooks.test.mjs
 git diff --check
 ```
 
 驗證器檢查兩平台的 plugin 清單、來源、基礎版本、skill 名稱與 description、
-入口的相對 Markdown 檔案連結，以及 hook 腳本是否存在；也列出各入口的行數與 UTF-8 大小。
+入口的相對 Markdown 檔案連結、hook 腳本是否存在，以及團隊標準三份副本（skill、常駐 hook、AGENTS 範本）
+的共用段落是否一致；也列出各入口的行數與 UTF-8 大小。
 它只檢查本 kit 的封裝契約，不取代完整 YAML／平台 schema 驗證、網路連結檢查或實際載入測試。
 
 大型 skill 入口只保留適用範圍、核心限制與任務索引；詳細規範放在 `references/`，按任務讀取。

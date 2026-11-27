@@ -383,4 +383,5 @@ export function useAsyncState(asyncFn, initialData = null, options = {}) {
 - **Loading 狀態**-loadingStore 在 Axios 攔截器統一管理，所以在 vue 組件不用管理 loading 狀態，在 API function 可以用 disableLoading 去控制是否用加載指示器
 - **loginStore 登入狀態管理**
 - **userStore 使用者狀態管理**
+- Store 的使用時機、寫法、與 Service／Composable 的分工見 [08-Pinia.md](08-Pinia.md)
 

@@ -1,120 +1,65 @@
 ---
 name: ux-heuristics
-description: >
-  UX 可用性啟發式評估技能模組。
-  當任務涉及 UI 元件設計、表單設計、錯誤訊息撰寫、導航/資訊架構、
-  或 Loading/Error/Empty 三態設計時，應載入此技能。
-  強制以 Nielsen 10 大啟發式原則與 Vue 元件實作規範雙軌審查。
+description: 'UI 可用性審查與自查：表單、錯誤訊息、Loading／Error／Empty 三態、導航、操作回饋與畫面細節，以 Nielsen 10 大原則為基準。使用時機：新增或修改頁面、元件、表單、彈窗，或要求 UX review。不用於程式架構與命名（改用 vue-nuxt-guidelines）。'
 ---
 
-# UX Heuristics Skill
+# UX 可用性審查
 
-**Maintainer**: Zoe Chan
-**Tech Stack**: Vue 3, Nuxt 3
-**Core Principles**: Nielsen's 10 Heuristics | Feedback Completeness | Defensive UX
+以 Nielsen 10 大原則為基準，檢查使用者能不能順利完成操作、知道發生了什麼、出錯時知道怎麼辦。
+來源與授權見 [ATTRIBUTION.md](ATTRIBUTION.md)。
 
----
+## 依任務載入
 
-## 使用此技能的前置條件
+| 任務 | 載入 |
+| --- | --- |
+| 表單、輸入框、驗證、送出 | [02-Form-Usability.md](resources/02-Form-Usability.md) |
+| Loading、Error、Empty 狀態 | [03-Feedback-States.md](resources/03-Feedback-States.md) |
+| 導航、步驟流程、資訊架構 | [01-Nielsen-Heuristics.md](resources/01-Nielsen-Heuristics.md) |
+| 新頁面或使用者要求完整 UX review | 全部載入，逐條對照 10 大原則，問題分 Critical／Major／Minor |
 
-在任何 UI 設計或元件實作前，你必須：
+一般 code review 與小型元件修改只看自我檢查清單，不做完整 review。
 
-1. **識別 UX 任務類型**（見下方決策樹）
-2. **載入對應的 `resources/` 規範文件**
-3. **生成 UI 後，對照 [UX 自我檢查清單] 驗證**
+## 表單
 
----
+- 每個欄位都有 label；placeholder 不能取代 label，輸入後就看不到了。
+- 驗證錯誤在離開欄位或送出後才顯示，不在打字時即時報錯。
+- 錯誤訊息說明「哪裡錯」與「怎麼改」，不只寫「格式錯誤」。
+- 送出中停用按鈕並顯示 loading，避免重複送出。
+- 可以用 Tab 依序切換欄位。
 
-## AI 決策樹 (Thinking Process)
+## 狀態回饋
 
-### CASE A：涉及表單設計
+- Loading、Error、Empty 三種狀態都有畫面，不留空白區域。
+- Error 狀態提供下一步：重試按鈕或返回連結。
+- Empty 狀態區分「本來就沒有資料」與「搜尋沒有結果」。
+- Loading 期間停止互動，避免重複操作。
+- Skeleton 尺寸接近真實內容，減少版面跳動。
 
-```
-偵測到以下關鍵字時觸發：
-<form>, <input>, <select>, v-model, validate, submit, error message,
-表單, 輸入框, 驗證, 必填, 送出
+## 導航與流程
 
-強制執行：
-1. 載入 resources/02-Form-Usability.md
-2. 確認驗證錯誤在 onBlur 或 onSubmit 後才顯示（禁止 onKeyDown 即時報錯）
-3. 確認每個欄位有明確的 label（禁止 placeholder 替代 label）
-4. 確認送出按鈕在 loading 時禁用並有視覺回饋
+- 使用者知道自己在哪裡：麵包屑或選單高亮。
+- 破壞性操作（刪除、清空、送出）有確認步驟，或可以復原。
+- 錯誤訊息用使用者看得懂的話，不顯示技術代碼。
 
-防守規則：
-- 禁止 placeholder 充當 label（失去焦點後標示消失）
-- 錯誤訊息必須描述「發生什麼問題」與「如何修正」（禁止只說「格式錯誤」）
-- 多欄位表單必須支援 Tab 鍵序導航
-- 送出中不可允許重複提交
-```
+## 自我檢查清單
 
-### CASE B：涉及狀態回饋設計（Loading / Error / Empty）
+- [ ] **三態完整**：Loading、Error、Empty 都有畫面？
+- [ ] **錯誤可操作**：Error 狀態有重試、返回或聯絡支援的入口？
+- [ ] **表單標籤**：每個 input 都有獨立的 `<label>`？
+- [ ] **錯誤描述**：驗證錯誤說明了問題與修正方式？
+- [ ] **位置感知**：使用者知道自己在哪個頁面或步驟？
+- [ ] **可逆操作**：刪除、送出等破壞性操作有確認？
+- [ ] **一致性**：互動方式與其他頁面的同類元件一致？
+- [ ] **無障礙**：有 aria-label、role 與鍵盤操作（見 `vue-nuxt-guidelines` 的「無障礙」）？
+- [ ] **操作回饋**：會改資料的操作（新增、修改、刪除、送出），成功與失敗都有 toast？使用專案既有的 toast 機制，不另外新增。
+- [ ] **文字不裁切**：下拉選單、日期欄位、按鈕的文字完整顯示？欄位對齊、彈窗大小足夠、不擁擠？能截圖就自己截圖確認。
+- [ ] **不加說明文字**：沒有自行加入需求以外的說明性提示文字？未接線的控件先回報，不默默標示「稍後開放」。
+- [ ] **網址不含使用者輸入**：使用者輸入的內容（問題、關鍵字、個資）沒有放進網址或 query string？網址會留在瀏覽紀錄、伺服器 log 與分享連結中。
 
-```
-偵測到以下關鍵字時觸發：
-loading, skeleton, spinner, error state, empty state, 空狀態,
-useAsyncState, useFetch, isLoading, isError, data?.length === 0
+## 審查時要特別標出的設計
 
-強制執行：
-1. 載入 resources/03-Feedback-States.md
-2. 確認三態（Loading / Error / Empty）都有對應 UI
-3. 確認 Error State 提供可操作的修復入口（重試按鈕 / 返回連結）
-4. 確認 Empty State 區分「無資料」與「搜尋無結果」兩種語意
-
-防守規則：
-- 禁止渲染空白區域（必須有 Empty State）
-- 禁止讓 Error 靜默失敗（至少顯示提示訊息）
-- Loading 時必須凍結互動，防止用戶重複操作
-- Skeleton 外觀尺寸應與真實內容尺寸接近，減少 Layout Shift
-```
-
-### CASE C：涉及導航 / 資訊架構 / 整體 UI 流程
-
-```
-偵測到以下關鍵字時觸發：
-navigation, breadcrumb, menu, wizard, step, 導航, 步驟, 流程, 路徑, 返回
-
-強制執行：
-1. 載入 resources/01-Nielsen-Heuristics.md
-2. 確認用戶當前位置有明確指示（麵包屑 / 高亮選單項）
-3. 確認所有操作都可撤銷或有確認步驟（Heuristic #3）
-4. 確認錯誤訊息是人類語言，非技術代碼（Heuristic #9）
-```
-
-### CASE D：全面 UX Review（新頁面 / 重要元件）
-
-```
-偵測到以下關鍵字時觸發：
-新增頁面, UX review, 設計審查, 可用性評估（一般 code review 與小型元件改動不觸發）
-
-強制執行：
-1. 載入所有 resources/ 文件
-2. 逐一對照 Nielsen 10 大原則輸出評分表
-3. 輸出 UX 問題清單（等級：Critical / Major / Minor）
-```
-
----
-
-## UX 自我檢查清單
-
-在提交任何 UI 元件或頁面前，逐項確認：
-
-- [ ] **三態完整**：Loading / Error / Empty 三種狀態都有對應 UI？
-- [ ] **錯誤可操作**：Error State 有明確的修復入口（重試 / 返回 / 聯絡支援）？
-- [ ] **表單標籤**：每個 input 都有獨立的 `<label>` 元素？
-- [ ] **錯誤描述**：驗證錯誤訊息說明了「問題」與「修正方式」？
-- [ ] **位置感知**：用戶知道自己在哪個頁面 / 步驟？
-- [ ] **可逆操作**：破壞性操作（刪除 / 送出）有確認機制？
-- [ ] **一致性**：此元件的互動行為與其他頁面的同類元件一致？
-- [ ] **無障礙基本盤**：有 aria-label / role / keyboard 支援（見 `vue-nuxt-guidelines` CASE G）？
-
----
-
-## 高風險 UX 陷阱
-
-以下設計模式在審查時必須特別標注：
-
-1. **Ghost Button**：低對比度按鈕在白底上幾乎不可見
-2. **Destructive Action 無確認**：刪除、清空等操作缺少二次確認
-3. **Infinite Scroll 無終點提示**：用戶不知道是否已到底部
-4. **Modal 內 Modal**：深層彈窗導致用戶迷失
-5. **Toast 唯一通知**：重要訊息只靠 Toast 通知（3 秒後消失）
+1. 低對比的按鈕，在白底上幾乎看不見。
+2. 刪除、清空等操作沒有確認。
+3. 無限捲動沒有到底的提示。
+4. 彈窗裡再開彈窗。
+5. 重要訊息只用 toast 通知，幾秒後就消失。

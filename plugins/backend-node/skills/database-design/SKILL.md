@@ -1,7 +1,6 @@
 ---
 name: database-design
-description: >
-  資料庫設計規範。包含資料庫與資料表的命名慣例、欄位後綴規範，以及推薦的 SQL 撰寫形式。
+description: '資料庫命名與 SQL 寫法規範：資料庫、資料表、欄位命名與後綴，以及推薦的 SQL 形式。使用時機：設計或修改資料表、命名欄位、撰寫 migration 或 SQL。NestJS 的 Entity 與 Migration 慣例另見 nestjs-guidelines。'
 ---
 
 # 資料庫設計規範

@@ -1,6 +1,6 @@
 ---
 name: test-frontend
-description: '為 Vue 3、Nuxt 3 或 TypeScript 的 Service、Composable、元件與使用者流程撰寫、補齊或審查 Vitest 與 Playwright 測試。'
+description: '為 Vue 3、Nuxt 3 的 Service、Composable、元件與使用者流程撰寫、補齊或審查 Vitest 與 Playwright 測試，含命名與回報格式。使用時機：寫前端測試、E2E、補測試。不用於後端（改用 test-backend）。'
 ---
 
 # 前端測試撰寫與規範
@@ -37,22 +37,22 @@ describe('userService', () => {
   })
 
   describe('getUserById', () => {
-    it('should return Ok with user data when API succeeds', async () => {
+    it('01. 查詢成功 - 應回傳 Ok 與使用者資料', async () => {
       vi.mocked(apiClient.get).mockResolvedValue({ id: 1, name: 'Alice' })
       const result = await getUserById(1)
       expect(result.ok).toBe(true)
       expect(result.value).toMatchObject({ id: 1 })
     })
 
-    it('should return Err when API returns 404', async () => {
+    it('02. 查無資料 - API 回 404 時應回傳 Err', async () => {
       vi.mocked(apiClient.get).mockRejectedValue({ status: 404 })
       const result = await getUserById(1)
       expect(result.ok).toBe(false)
       expect(result.error.code).toBe('NOT_FOUND')
     })
 
-    it.todo('should return Err(INVALID_ID) when userId is null')
-    it.todo('should return Err(INVALID_ID) when userId is negative')
+    it.todo('03. 參數錯誤 - userId 為 null 時應回傳 Err(INVALID_ID)')
+    it.todo('04. 參數錯誤 - userId 為負數時應回傳 Err(INVALID_ID)')
   })
 })
 ```
@@ -82,7 +82,7 @@ describe('useUser', () => {
     vi.clearAllMocks()
   })
 
-  it('should set isLoading to true while fetching', async () => {
+  it('01. 載入中 - 查詢期間 isLoading 應為 true', async () => {
     vi.mocked(userService.getUserById).mockResolvedValue({
       ok: true,
       value: { id: 1, name: 'Alice' }
@@ -91,9 +91,9 @@ describe('useUser', () => {
     expect(result.isLoading.value).toBe(true)
   })
 
-  it.todo('should set user data after successful fetch')
-  it.todo('should set error state when service returns Err')
-  it.todo('should reset state on unmount')
+  it.todo('02. 查詢成功 - 應寫入使用者資料')
+  it.todo('03. 查詢失敗 - Service 回傳 Err 時應設定 error')
+  it.todo('04. 卸載 - 應重設狀態')
 })
 ```
 
@@ -120,20 +120,20 @@ describe('UserCard', () => {
     user: { id: 1, name: 'Alice', email: 'alice@example.com' }
   }
 
-  it('should render user name correctly', () => {
+  it('01. 顯示 - 應顯示使用者名稱', () => {
     const wrapper = mount(UserCard, { props: defaultProps })
     expect(wrapper.text()).toContain('Alice')
   })
 
-  it('should emit "edit" event when edit button is clicked', async () => {
+  it('02. 點擊編輯 - 應發出 edit 事件', async () => {
     const wrapper = mount(UserCard, { props: defaultProps })
     await wrapper.find('[data-testid="edit-btn"]').trigger('click')
     expect(wrapper.emitted('edit')).toBeTruthy()
     expect(wrapper.emitted('edit')?.[0]).toEqual([1])
   })
 
-  it.todo('should show loading skeleton when user prop is null')
-  it.todo('should apply "admin" CSS class when user.role is admin')
+  it.todo('03. 載入中 - user 為 null 時應顯示 skeleton')
+  it.todo('04. 管理員 - role 為 admin 時應套用 admin class')
 })
 ```
 
@@ -159,22 +159,22 @@ test.describe('Login Flow', () => {
     await page.goto('/login')
   })
 
-  test('should login successfully with valid credentials', async ({ page }) => {
+  test('01. 登入成功 - 帳密正確應進入首頁', async ({ page }) => {
     await page.fill('[data-testid="email-input"]', 'user@example.com')
     await page.fill('[data-testid="password-input"]', 'password123')
     await page.click('[data-testid="submit-btn"]')
     await expect(page).toHaveURL('/dashboard')
   })
 
-  test('should show error message with invalid credentials', async ({ page }) => {
+  test('02. 登入失敗 - 帳密錯誤應顯示錯誤訊息', async ({ page }) => {
     await page.fill('[data-testid="email-input"]', 'wrong@example.com')
     await page.fill('[data-testid="password-input"]', 'wrongpass')
     await page.click('[data-testid="submit-btn"]')
     await expect(page.locator('[data-testid="error-message"]')).toBeVisible()
   })
 
-  test.todo('should redirect to /login when accessing protected route without auth')
-  test.todo('should persist session after page refresh')
+  test.todo('03. 未登入 - 進入受保護頁面應導向 /login')
+  test.todo('04. 重新整理 - 應保留登入狀態')
 })
 ```
 
@@ -182,21 +182,25 @@ test.describe('Login Flow', () => {
 
 ## 測試命名規範
 
-```
+格式為 `編號. 情境 - 預期結果`，編號在整個檔案內連續（跨 describe 也連續），與 `test-backend` 相同。
+
+```ts
 describe('[測試對象名稱]', () => {
   describe('[方法 / 功能名稱]', () => {
-    it('should [預期結果] when [情境條件]', ...)
+    it('01. [情境] - [預期結果]', ...)
   })
 })
 ```
 
-**範例（正確）：**
-- `it('should return Err when userId is null')`
-- `it('should emit "submit" event with form data when form is valid')`
+正確：
 
-**範例（錯誤，禁止）：**
-- `it('test getUserById')`  ← 沒有說明預期結果
-- `it('works correctly')`   ← 不具體
+- `it('01. 參數錯誤 - userId 為 null 時應回傳 Err')`
+- `it('02. 表單有效 - 送出時應發出 submit 事件並帶表單資料')`
+
+錯誤：
+
+- `it('test getUserById')`：沒有說明情境與預期結果
+- `it('works correctly')`：不具體
 
 ---
 
@@ -215,9 +219,29 @@ describe('[測試對象名稱]', () => {
 
 ## 自我檢查清單（產出後核對）
 
-- [ ] 每個 it 區塊名稱符合 `should [結果] when [條件]` 格式
+- [ ] 每個 it 區塊名稱符合 `編號. 情境 - 預期結果` 格式，編號整個檔案連續
 - [ ] 未實作的場景使用 `it.todo()` 標注（不留空的 it block）
 - [ ] Service 測試：有 Mock 外部依賴，有 `beforeEach(() => vi.clearAllMocks())`
 - [ ] 元件測試：使用 `data-testid` 選取，不依賴 CSS class
 - [ ] E2E 測試：每個 test 獨立，有 `beforeEach` 設定初始狀態
 - [ ] `npm run test` 執行骨架後無語法錯誤（it.todo 的測試為 pending 狀態，不算失敗）
+- [ ] 已依下方「回報格式」列出測試清單，並分開回報建置、單元、E2E、實機驗證
+
+## 回報格式
+
+完成後依 `team-standards` 的「驗證與回報」回報，格式如下：
+
+```markdown
+### 測試清單
+| 測試 | 狀態 | 理由 |
+| --- | --- | --- |
+| 送出失敗應顯示錯誤 toast | 已補 | 新增的業務分支 |
+| … | 建議補 | … |
+| … | 不需要 | … |
+
+### 驗證結果
+- 建置：通過／失敗／未執行（原因）
+- 單元測試：指令與結果
+- E2E：指令與結果，或未執行（原因）
+- 實機驗證：步驟與結果，或未執行（原因）
+```

@@ -1,7 +1,6 @@
 ---
 name: python-environment
-description: >
-  Python 開發環境與虛擬環境 (venv) 規範。包含如何安全地建立、啟動與使用 Python 虛擬環境，避免污染系統全域環境。
+description: 'Python 虛擬環境（venv）規範：建立、啟動與使用 venv，安裝套件時不污染系統 Python。使用時機：建立 Python 專案、安裝套件、遇到套件或直譯器路徑問題。執行指定程式改用 run-python。'
 ---
 
 # Python 開發環境與虛擬環境 (venv) 規範

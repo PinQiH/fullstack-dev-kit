@@ -1,6 +1,6 @@
 ---
 name: api-doc
-description: '為新增或修改的 API 撰寫可交接的規格文件，涵蓋路由、權限、輸入、回傳、資料影響、資料流與維運注意事項。'
+description: '為新增或修改的 API 撰寫可交接的規格文件，涵蓋路由、權限、輸入、回傳、資料影響、資料流與維運注意事項。使用時機：寫 API 文件、API 規格、交接 API。不用於排程（改用 cronjob-doc）與 Vue 元件（改用 component-doc）。'
 ---
 
 # API 文件撰寫

@@ -7,13 +7,15 @@
 通用的 Node.js 規範（camelCase、動詞＋名詞、物件解構參數、early return、
 禁用 `any`、顯式回傳型別、strict mode）一律沿用 `nodejs-guidelines`，本檔不重複。
 
-**但有三處 NestJS 必須覆寫，遇到時以本檔為準：**
+**但有兩處 NestJS 必須覆寫，遇到時以本檔為準：**
 
 | nodejs-guidelines                                   | NestJS 專案                                                          | 為什麼必須覆寫                                                                                                                         |
 | --------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
 | 「優先使用`interface` 定義 DTO」                  | **DTO 一定是 `class`**                                       | interface 編譯後完全消失，執行期沒有東西可掛裝飾器，`ValidationPipe` 也就沒有東西可驗。此專案第 2 站就是從 interface 改成 class 的   |
-| 「Repository 專責所有 DB 操作」＋`generalRepo.js` | **不自建 Repository 層**                                       | 那套是 Sequelize 的做法。TypeORM 的`Repository` 本身就是 Repository 模式（Data Mapper）的實作，再包一層只轉發的 class 換不到任何東西 |
 | Repository 錯誤處理拋`DatabaseConflictError`      | **Service 拋 `AppError` 子類，資料庫錯誤由 Filter 統一翻譯** | 見 [錯誤處理](http-validation.md)                                                                                                                               |
+
+「Repository 專責所有 DB 操作」這條沿用，但不用 `generalRepo.js` 這種泛用轉發：
+每個 Repository 的方法都要有業務語意，見 [Repository 層](persistence.md)。
 
 命名部分則是延用而非覆寫：`nodejs-guidelines` 的
 CRUD 動詞（`add / update / delete / get / detail`）在此專案的體現是
@@ -27,20 +29,21 @@ CRUD 動詞（`add / update / delete / get / detail`）在此專案的體現是
 ```
 Controller  ── HTTP 邊界。解析請求、呼叫 Service、回傳資料本體
 Service     ── 業務判斷。不知道自己正在服務 HTTP
-Repository  ── TypeORM 的 Repository 直接注入使用
+Repository  ── 自建 *.repository.ts。所有查詢集中在這裡，方法帶業務語意
 ```
 
-### 1.1 Service 直接注入 Repository
+### 1.1 Service 注入自建 Repository，不直接碰 TypeORM
 
 ```ts
-constructor(
-	@InjectRepository(Todo)
-	private readonly todoRepository: Repository<Todo>,
-) {}
+constructor(private readonly todoRepository: TodoRepository) {}
+
+async getTodos({ ownerId }: { ownerId: string }): Promise<Todo[]> {
+	return this.todoRepository.getTodosByOwner({ ownerId });
+}
 ```
 
-真的要換 ORM 時，要改的是 Service 內的查詢寫法，
-多一層轉發並不會讓那件事變簡單。
+Service 只看得到「語意清楚的幾個方法」，看不到 `Repository<Todo>`、
+`QueryBuilder`、`DataSource`。理由與寫法見 [Repository 層](persistence.md)。
 
 ### 1.2 Service 不得認得 HTTP
 

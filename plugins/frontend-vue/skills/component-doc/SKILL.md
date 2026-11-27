@@ -1,6 +1,6 @@
 ---
 name: component-doc
-description: '為 Vue 元件或 Composable 撰寫可交接文件，涵蓋用途、Props、Emits、Slots、三態、無障礙、使用範例與相依風險。'
+description: '為 Vue 元件或 Composable 撰寫可交接文件，涵蓋用途、Props、Emits、Slots、三態、無障礙、使用範例與相依風險。使用時機：寫元件文件、元件交接。不用於 API（改用 api-doc）。'
 ---
 
 # 前端元件文件
